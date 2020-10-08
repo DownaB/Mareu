@@ -37,9 +37,9 @@
         android:layout_weight="0"
         android:src="@drawable/ic_delete_black_24dp"
         android:layout_marginRight="16dp"
-        app:layout_constraintBottom_toBottomOf="@id/text"
+        app:layout_constraintBottom_toBottomOf="@id/text_meeting"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/text"/>
+        app:layout_constraintTop_toTopOf="@id/text_meeting"/>
 
 
 

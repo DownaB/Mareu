@@ -1,23 +1,26 @@
-package com.downa.maru;
+package View;
 
 import android.os.Bundle;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
+import com.downa.maru.Controller.ApiService;
+import com.downa.maru.R;
 import com.google.android.material.textfield.TextInputLayout;
 
-import androidx.annotation.NonNull;
+import java.util.ArrayList;
+import java.util.List;
+
+import Controller.ApiService;
+import Model.Meeting;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.TaskStackBuilder;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AddMeeting extends AppCompatActivity {
 
-    @Bind(R.id.OrganisateurLyt)
-    TextInputLayout Organisateur;
+    @Bind(R.id.OrganisateurLyt) TextInputLayout Organisateur;
     @Bind(R.id.DateLyt) TextInputLayout Date;
     @Bind(R.id.HoursLyt) TextInputLayout Hours;
     @Bind(R.id.ParticipantsLyt1) TextInputLayout Participant1;
@@ -53,4 +56,24 @@ public class AddMeeting extends AppCompatActivity {
 
         mApiService.createMeeting(meeting);
 }
+
+    public static class MainActivity extends AppCompatActivity {
+
+        @Bind(R.id.meeting_recyclerview)
+        private RecyclerView mRecyclerView;
+        private ApiService.MeetingAdapter mAdapter;
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            ButterKnife.bind(this);
+
+            List<Meeting> ListMeeting = new ArrayList<>();
+
+
+            mAdapter = new ApiService.MeetingAdapter(ListMeeting);
+            mRecyclerView.setAdapter(mAdapter);
+        }
+    }
 }
