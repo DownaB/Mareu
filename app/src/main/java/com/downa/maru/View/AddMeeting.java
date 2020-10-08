@@ -1,16 +1,15 @@
-package View;
+package com.downa.maru.View;
 
 import android.os.Bundle;
 
 import com.downa.maru.Controller.ApiService;
+import com.downa.maru.Model.Meeting;
 import com.downa.maru.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Controller.ApiService;
-import Model.Meeting;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,8 +25,6 @@ public class AddMeeting extends AppCompatActivity {
     @Bind(R.id.ParticipantsLyt1) TextInputLayout Participant1;
     @Bind(R.id.ParticipantsLyt2) TextInputLayout Participant2;
     @Bind(R.id.ParticipantsLyt3)TextInputLayout Participant3;
-    @Bind(R.id.ParticipantsLyt4) TextInputLayout Participant4;
-    @Bind(R.id.ParticipantsLyt5) TextInputLayout Participant5;
     @Bind(R.id.SubjectLyt) TextInputLayout Subject;
 
     private ApiService mApiService;
@@ -49,8 +46,6 @@ public class AddMeeting extends AppCompatActivity {
                 Participant1.getEditText().getText().toString(),
                 Participant2.getEditText().getText().toString(),
                 Participant3.getEditText().getText().toString(),
-                Participant4.getEditText().getText().toString(),
-                Participant5.getEditText().getText().toString(),
                 Subject.getEditText().getText().toString()
     );
 

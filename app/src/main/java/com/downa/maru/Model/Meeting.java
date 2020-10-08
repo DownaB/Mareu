@@ -1,4 +1,4 @@
-package Model;
+package com.downa.maru.Model;
 
 public class Meeting {
 

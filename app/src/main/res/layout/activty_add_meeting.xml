@@ -22,7 +22,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Organisateur"
+        android:hint="@string/organisateur"
         android:inputType="text"/>
 
         <TextView
@@ -78,22 +78,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Participant 3"
-            android:inputType="textEmailAddress"/>
-
-        <EditText
-            android:id="@+id/ParticipantsLyt4"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Participant 4"
-            android:inputType="textEmailAddress"/>
-
-        <EditText
-            android:id="@+id/ParticipantsLyt5"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Participant 5"
             android:inputType="textEmailAddress"/>
 
         <TextView

@@ -1,4 +1,4 @@
-package Controller;
+package com.downa.maru.Controller;
 
 import java.util.List;
 

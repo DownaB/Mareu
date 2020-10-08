@@ -1,9 +1,6 @@
-package Controller;
+package com.downa.maru.Controller;
 
 import android.os.Bundle;
-import android.text.Layout;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.downa.maru.R;
 
@@ -15,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.Bind;
 
 public class MainActivity extends AppCompatActivity {
 
