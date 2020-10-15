@@ -2,12 +2,12 @@ package com.downa.maru.Controller;
 
 import android.os.Bundle;
 
+import com.downa.maru.Model.Meeting;
 import com.downa.maru.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Meeting;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;

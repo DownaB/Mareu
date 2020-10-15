@@ -1,8 +1,8 @@
-package com.downa.maru.Controller;
+package com.downa.maru.Service;
+
+import com.downa.maru.Model.Meeting;
 
 import java.util.List;
-
-import Model.Meeting;
 
 public class MeetingApiService implements ApiService {
 

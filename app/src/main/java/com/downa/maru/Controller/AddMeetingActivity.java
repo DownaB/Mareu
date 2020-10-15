@@ -1,13 +1,18 @@
-package com.downa.maru.View;
+package com.downa.maru.Controller;
 
 import android.os.Bundle;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
 
-import com.downa.maru.Controller.ApiService;
+import com.downa.maru.Service.ApiService;
 import com.downa.maru.Model.Meeting;
+import com.downa.maru.Model.Room;
 import com.downa.maru.R;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -17,15 +22,16 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddMeeting extends AppCompatActivity {
+public class AddMeetingActivity extends AppCompatActivity {
 
     @Bind(R.id.OrganisateurLyt) TextInputLayout Organisateur;
-    @Bind(R.id.DateLyt) TextInputLayout Date;
-    @Bind(R.id.HoursLyt) TextInputLayout Hours;
-    @Bind(R.id.ParticipantsLyt1) TextInputLayout Participant1;
-    @Bind(R.id.ParticipantsLyt2) TextInputLayout Participant2;
-    @Bind(R.id.ParticipantsLyt3)TextInputLayout Participant3;
+    DatePicker mDatePicker = (DatePicker) this.findViewById(R.id.Date);
+    TimePicker mTimePicker = (TimePicker) this.findViewById(R.id.Hours);
     @Bind(R.id.SubjectLyt) TextInputLayout Subject;
+    ChipGroup mParticipants = (ChipGroup) this.findViewById(R.id.Participant);
+
+    
+    Room mRoom;
 
     private ApiService mApiService;
     @Override
@@ -36,18 +42,17 @@ public class AddMeeting extends AppCompatActivity {
 
     }
 
+
 @OnClick(R.id.Create)
     void addMeeting() {
-        Meeting meeting = new Meeting(
+        Meeting meeting = new Meeting (
                 System.currentTimeMillis(),
+                mRoom,
                 Organisateur.getEditText().getText().toString(),
-                Date.getEditText().getText().toString(),
-                Hours.getEditText().getText().toString(),
-                Participant1.getEditText().getText().toString(),
-                Participant2.getEditText().getText().toString(),
-                Participant3.getEditText().getText().toString(),
-                Subject.getEditText().getText().toString()
-    );
+                List <mParticipants> = Arrays.asList();
+                mDatePicker.getDayOfMonth(),mDatePicker.getMonth(),mDatePicker.getYear(),
+                mTimePicker.setIs24HourView(true),
+                Subject.getEditText().getText().toString());
 
         mApiService.createMeeting(meeting);
 }
@@ -56,7 +61,7 @@ public class AddMeeting extends AppCompatActivity {
 
         @Bind(R.id.meeting_recyclerview)
         private RecyclerView mRecyclerView;
-        private ApiService.MeetingAdapter mAdapter;
+        private ApiService.MeetingAdapter mMeetingAdapter;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {

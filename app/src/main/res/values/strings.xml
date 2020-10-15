@@ -13,4 +13,7 @@
     <string name="date">date</string>
     <string name="salle">salle</string>
     <string name="organisateur">Organisateur</string>
+    <string name="name">Name</string>
+    <string name="entrer_le_mail_des_particpants">Entrer le mail des particpants</string>
+    <string name="ajouter">Ajouter</string>
 </resources>

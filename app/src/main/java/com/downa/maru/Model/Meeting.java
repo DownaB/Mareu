@@ -7,14 +7,17 @@ private String participant;
 private String date;
 private String hour;
 private String subject;
+private Room room;
 
-public Meeting (String organisateur, String participant, String date, String hour, String subject){
+
+public Meeting (Room room,String organisateur, String participant, String date, String hour, String subject){
 
     this.organisateur = organisateur;
     this.participant = participant;
     this.date = date;
     this.hour = hour;
     this.subject = subject;
+
 }
 
     public String getOrganisateur() {
