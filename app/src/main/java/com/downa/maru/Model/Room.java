@@ -4,12 +4,17 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.DrawableContainer;
 import android.widget.ImageView;
 
+import androidx.annotation.DrawableRes;
+
 public class Room {
 
     private String name;
-    private ImageView avatar;
+    @DrawableRes
+     private int avatar;
 
-    public Room(ImageView avatar, String name ) {
+    public Room(@DrawableRes int avatar, String name ) {
+        this.name = name;
+        this.avatar = avatar;
     }
 
     public String getName() {
@@ -20,11 +25,11 @@ public class Room {
         this.name = name;
     }
 
-    public ImageView getAvatar() {
+    public int getAvatar() {
         return avatar;
     }
 
-    public void ImageView (ImageView avatar) {
+    public void setAvatar  (int avatar) {
         this.avatar = avatar;
     }
 }

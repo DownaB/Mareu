@@ -1,7 +1,13 @@
 package com.downa.maru.Controller;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.downa.maru.Service.ApiService;
@@ -13,6 +19,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -25,10 +32,17 @@ import butterknife.OnClick;
 public class AddMeetingActivity extends AppCompatActivity {
 
     @Bind(R.id.OrganisateurLyt) TextInputLayout Organisateur;
-    DatePicker mDatePicker = (DatePicker) this.findViewById(R.id.Date);
-    TimePicker mTimePicker = (TimePicker) this.findViewById(R.id.Hours);
     @Bind(R.id.SubjectLyt) TextInputLayout Subject;
     ChipGroup mParticipants = (ChipGroup) this.findViewById(R.id.Participant);
+    TextView mDate = (TextView)this.findViewById(R.id.Date);
+    Button mOkDate= (Button)this.findViewById(R.id.Ok_Date);
+    TextView mHour = (TextView)this.findViewById(R.id.Hour);
+    Button mOkHour = (Button)this.findViewById(R.id.Ok_Hour);
+
+    Calendar c;
+    DatePickerDialog mDatePickerDialog;
+    TimePickerDialog mTimePickerDialog;
+    Context mContext = this;
 
     
     Room mRoom;
@@ -40,18 +54,53 @@ public class AddMeetingActivity extends AppCompatActivity {
         setContentView(R.layout.activty_add_meeting);
         ButterKnife.bind(this);
 
+        mOkDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                c = Calendar.getInstance();
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                int month = c.get(Calendar.MONTH);
+                int year = c.get(Calendar.YEAR);
+
+
+                mDatePickerDialog = new DatePickerDialog(AddMeetingActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        mDate.setText(dayOfMonth + "/" + month +"/" + year);
+                    }
+                }, day,month,year);
+                mDatePickerDialog.show();
+            }
+        });
+
+        mOkHour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+
+                mTimePickerDialog = new TimePickerDialog(AddMeetingActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        mHour.setText(hourOfDay + ":" + minute);
+                    }
+                },hour,minute,android.text.format.DateFormat.is24HourFormat(mContext));
+                mTimePickerDialog.show();
+
+            }
+        });
+
     }
 
 
 @OnClick(R.id.Create)
     void addMeeting() {
         Meeting meeting = new Meeting (
-                System.currentTimeMillis(),
                 mRoom,
                 Organisateur.getEditText().getText().toString(),
-                List <mParticipants> = Arrays.asList();
-                mDatePicker.getDayOfMonth(),mDatePicker.getMonth(),mDatePicker.getYear(),
-                mTimePicker.setIs24HourView(true),
+                mParticipants,
+                mDatePickerDialog,
+                mTimePickerDialog,
                 Subject.getEditText().getText().toString());
 
         mApiService.createMeeting(meeting);

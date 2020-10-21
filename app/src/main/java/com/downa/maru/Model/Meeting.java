@@ -2,23 +2,25 @@ package com.downa.maru.Model;
 
 public class Meeting {
 
-private String organisateur;
-private String participant;
-private String date;
-private String hour;
-private String subject;
-private Room room;
+    private String organisateur;
+    private String participant;
+    private String date;
+    private String hour;
+    private String subject;
+    private Room room;
 
 
-public Meeting (Room room,String organisateur, String participant, String date, String hour, String subject){
+    public Meeting(Room room, String organisateur, String participant, String date, String hour, String subject) {
 
-    this.organisateur = organisateur;
-    this.participant = participant;
-    this.date = date;
-    this.hour = hour;
-    this.subject = subject;
+        this.organisateur = organisateur;
+        this.participant = participant;
+        this.date = date;
+        this.hour = hour;
+        this.subject = subject;
+        this.room = room;
 
-}
+
+    }
 
     public String getOrganisateur() {
         return organisateur;

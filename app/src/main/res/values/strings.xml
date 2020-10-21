@@ -16,4 +16,10 @@
     <string name="name">Name</string>
     <string name="entrer_le_mail_des_particpants">Entrer le mail des particpants</string>
     <string name="ajouter">Ajouter</string>
+    <string name="selectionnez_la_date">Selectionnez la date</string>
+    <string name="ok">Ok</string>
+    <string name="selectionnez_la_date">Selectionnez la date</string>
+    <string name="ok">Ok</string>
+    <string name="selectionnez_une_date">Selectionnez une date</string>
+    <string name="ok">Ok</string>
 </resources>

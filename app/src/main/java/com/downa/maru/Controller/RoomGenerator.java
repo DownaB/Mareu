@@ -11,6 +11,7 @@ public class RoomGenerator {
 
     public static List <Room> RoomList = Arrays.asList(){
 
-new Room()
+new Room(android.R.drawable., "Antlantis");
+new Room(android.R.drawable.avatar_darkblue,"Emeraude");
     }
 }
