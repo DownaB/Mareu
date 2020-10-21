@@ -4,13 +4,13 @@ public class Meeting {
 
     private String organisateur;
     private String participant;
-    private String date;
-    private String hour;
+    private long date;
+    private long hour;
     private String subject;
     private Room room;
 
 
-    public Meeting(Room room, String organisateur, String participant, String date, String hour, String subject) {
+    public Meeting(Room room, String organisateur, String participant, long date, long hour, String subject) {
 
         this.organisateur = organisateur;
         this.participant = participant;
@@ -38,19 +38,19 @@ public class Meeting {
         this.participant = participant;
     }
 
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(long date) {
         this.date = date;
     }
 
-    public String getHour() {
+    public long getHour() {
         return hour;
     }
 
-    public void setHour(String hour) {
+    public void setHour(long hour) {
         this.hour = hour;
     }
 
