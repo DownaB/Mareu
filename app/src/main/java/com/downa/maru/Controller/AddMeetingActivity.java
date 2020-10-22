@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -14,6 +15,7 @@ import com.downa.maru.Service.ApiService;
 import com.downa.maru.Model.Meeting;
 import com.downa.maru.Model.Room;
 import com.downa.maru.R;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -33,7 +35,8 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     @Bind(R.id.OrganisateurLyt) TextInputLayout Organisateur;
     @Bind(R.id.SubjectLyt) TextInputLayout Subject;
-    ChipGroup mParticipants = (ChipGroup) this.findViewById(R.id.Participant);
+    ChipGroup mChipGroup = (ChipGroup) this.findViewById(R.id.Participant);
+    Button mAdd_Participant = (Button)this.findViewById(R.id.Btn_add);
     TextView mDate = (TextView)this.findViewById(R.id.Date);
     Button mOkDate= (Button)this.findViewById(R.id.Ok_Date);
     TextView mHour = (TextView)this.findViewById(R.id.Hour);
@@ -44,8 +47,10 @@ public class AddMeetingActivity extends AppCompatActivity {
     TimePickerDialog mTimePickerDialog;
     Context mContext = this;
 
-    
     Room mRoom;
+
+    Chip chip;
+    int chipNumber;
 
     private ApiService mApiService;
     @Override
@@ -90,6 +95,30 @@ public class AddMeetingActivity extends AppCompatActivity {
             }
         });
 
+      mAdd_Participant.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+
+              Chip chip = new Chip(AddMeetingActivity.this);
+              chip.setText("chip" + chipNumber ++);
+              chip.setCheckable(true);
+              chip.setCloseIcon(getDrawable(R.drawable.ic_close_black_24dp));
+              chip.setCloseIconEnabled(true);
+
+          }
+      });
+
+      chip.setOnCloseIconClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+
+              mChipGroup.removeView(v);
+
+          }
+      });
+
+      mChipGroup.addView(chip,0);
+
     }
 
 
@@ -98,7 +127,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         Meeting meeting = new Meeting (
                 mRoom,
                 Organisateur.getEditText().getText().toString(),
-                mParticipants,
+                mChipGroup,
                 mDatePickerDialog,
                 mTimePickerDialog,
                 Subject.getEditText().getText().toString());

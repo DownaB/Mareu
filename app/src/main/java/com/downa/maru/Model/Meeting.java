@@ -1,16 +1,18 @@
 package com.downa.maru.Model;
 
+import com.google.android.material.chip.Chip;
+
 public class Meeting {
 
     private String organisateur;
-    private String participant;
+    private Chip participant;
     private long date;
     private long hour;
     private String subject;
     private Room room;
 
 
-    public Meeting(Room room, String organisateur, String participant, long date, long hour, String subject) {
+    public Meeting(Room room, String organisateur, Chip participant, long date, long hour, String subject) {
 
         this.organisateur = organisateur;
         this.participant = participant;
@@ -30,11 +32,11 @@ public class Meeting {
         this.organisateur = organisateur;
     }
 
-    public String getParticipant() {
+    public Chip getParticipant() {
         return participant;
     }
 
-    public void setParticipant(String participant) {
+    public void setParticipant(Chip participant) {
         this.participant = participant;
     }
 
