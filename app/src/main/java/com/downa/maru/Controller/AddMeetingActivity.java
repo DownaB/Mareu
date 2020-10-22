@@ -26,6 +26,7 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -102,8 +103,8 @@ public class AddMeetingActivity extends AppCompatActivity {
               Chip chip = new Chip(AddMeetingActivity.this);
               chip.setText("chip" + chipNumber ++);
               chip.setCheckable(true);
-              chip.setCloseIcon(getDrawable(R.drawable.ic_close_black_24dp));
-              chip.setCloseIconEnabled(true);
+              chip.setCloseIcon(ContextCompat.getDrawable(AddMeetingActivity.this,R.drawable.ic_close_black_24dp));
+              chip.setCloseIconVisible(true);
 
           }
       });

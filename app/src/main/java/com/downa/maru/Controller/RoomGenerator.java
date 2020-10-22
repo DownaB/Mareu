@@ -3,23 +3,24 @@ package com.downa.maru.Controller;
 import android.graphics.drawable.Drawable;
 
 import com.downa.maru.Model.Room;
+import com.downa.maru.R;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class RoomGenerator {
 
-    public static List <Room> RoomList = Arrays.asList(){
+    public static List <Room> RoomList = Arrays.asList();{
 
-new Room(android.R.drawable., "Aphrodite");
-new Room(android.R.drawable.,"Apollon");
-new Room(android.R.drawable, "Poseidon");
-new Room(android.R.drawable, "Ares");
-new Room (android.R.drawable, "Artemis");
-new Room(android.R.drawable, "Hera");
-new Room(android.R.drawable, "Hermes");
-new Room(android.R.drawable, "Zeus");
-new Room (android.R.drawable, "Hadès");
-new Room(android.R.drawable, "Titan");
+new Room(R.drawable.avatar_blue, "Aphrodite");
+new Room(R.drawable.avatar_brown,"Apollon");
+new Room(R.drawable.avatar_darkpurple, "Poseidon");
+new Room(R.drawable.avatar_green, "Ares");
+new Room (R.drawable.avatar_pink, "Artemis");
+new Room(R.drawable.avatar_red, "Hera");
+new Room(R.drawable.avatar_yellow, "Hermes");
+new Room(R.drawable.avatar_purple, "Zeus");
+new Room (R.drawable.avatar_grey, "Hadès");
+new Room(R.drawable.avatar_darkblue, "Titan");
     }
 }
