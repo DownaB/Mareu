@@ -29,20 +29,6 @@
             android:hint="@string/name"
             android:inputType="text" />
 
-
-   <TextView
-       android:id="@+id/Organisateur"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/OrganisateurLyt"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/organisateur"
-        android:inputType="text"/>
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

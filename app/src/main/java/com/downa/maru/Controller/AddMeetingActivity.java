@@ -3,6 +3,7 @@ package com.downa.maru.Controller;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,7 +36,7 @@ import butterknife.OnClick;
 
 public class AddMeetingActivity extends AppCompatActivity {
 
-    @Bind(R.id.OrganisateurLyt) TextInputLayout Organisateur;
+
     @Bind(R.id.SubjectLyt) TextInputLayout Subject;
     ChipGroup mChipGroup = (ChipGroup) this.findViewById(R.id.Participant);
     Button mAdd_Participant = (Button)this.findViewById(R.id.Btn_add);
@@ -50,8 +52,13 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     Room mRoom;
 
-    Chip chip;
     int chipNumber;
+
+    int day;
+    int month;
+    int year;
+    int hour;
+    int minute;
 
     private ApiService mApiService;
     @Override
@@ -60,41 +67,34 @@ public class AddMeetingActivity extends AppCompatActivity {
         setContentView(R.layout.activty_add_meeting);
         ButterKnife.bind(this);
 
-        mOkDate.setOnClickListener(new View.OnClickListener() {
+
+        //Date Select Listener.
+        final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onClick(View v) {
-                c = Calendar.getInstance();
-                int day = c.get(Calendar.DAY_OF_MONTH);
-                int month = c.get(Calendar.MONTH);
-                int year = c.get(Calendar.YEAR);
-
-
-                mDatePickerDialog = new DatePickerDialog(AddMeetingActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        mDate.setText(dayOfMonth + "/" + month +"/" + year);
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                mDate.setText(day + "/" + month + "/" + year);
                     }
-                }, day,month,year);
-                mDatePickerDialog.show();
-            }
-        });
+                };
+        // Create DatePickerDialog
+        DatePickerDialog mDatePickerDialog = new DatePickerDialog(this, dateSetListener, day, month, year);
 
-        mOkHour.setOnClickListener(new View.OnClickListener() {
+        // Show
+        mDatePickerDialog.show();
+
+        // Time Select Listener.
+
+        final TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
-            public void onClick(View v) {
-                int hour = c.get(Calendar.HOUR_OF_DAY);
-                int minute = c.get(Calendar.MINUTE);
-
-                mTimePickerDialog = new TimePickerDialog(AddMeetingActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        mHour.setText(hourOfDay + ":" + minute);
-                    }
-                },hour,minute,android.text.format.DateFormat.is24HourFormat(mContext));
-                mTimePickerDialog.show();
-
+            public void onTimeSet(TimePicker view, int hour, int minute) {
+               mDate.setText(hour + "/" + minute);
             }
-        });
+        };
+        // Create TimePickerDialog
+        TimePickerDialog mTimePickerDialog = new TimePickerDialog(this, timeSetListener, hour, minute);
+        //Show
+        mTimePickerDialog.show();
+
+
 
       mAdd_Participant.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -105,29 +105,30 @@ public class AddMeetingActivity extends AppCompatActivity {
               chip.setCheckable(true);
               chip.setCloseIcon(ContextCompat.getDrawable(AddMeetingActivity.this,R.drawable.ic_close_black_24dp));
               chip.setCloseIconVisible(true);
+              mChipGroup.addView(chip,0);
+
+              chip.setOnCloseIconClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+
+                      mChipGroup.removeView(v);
+
+                  }
+              });
+
 
           }
-      });
 
-      chip.setOnCloseIconClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
+          });
+      }
 
-              mChipGroup.removeView(v);
-
-          }
-      });
-
-      mChipGroup.addView(chip,0);
-
-    }
+/* Create Meeting
 
 
 @OnClick(R.id.Create)
     void addMeeting() {
         Meeting meeting = new Meeting (
                 mRoom,
-                Organisateur.getEditText().getText().toString(),
                 mChipGroup,
                 mDatePickerDialog,
                 mTimePickerDialog,
@@ -135,6 +136,9 @@ public class AddMeetingActivity extends AppCompatActivity {
 
         mApiService.createMeeting(meeting);
 }
+
+ */
+/* Recycler View
 
     public static class MainActivity extends AppCompatActivity {
 
@@ -154,5 +158,8 @@ public class AddMeetingActivity extends AppCompatActivity {
             mAdapter = new ApiService.MeetingAdapter(ListMeeting);
             mRecyclerView.setAdapter(mAdapter);
         }
+
     }
+   */
+
 }

@@ -2,42 +2,33 @@ package com.downa.maru.Model;
 
 import com.google.android.material.chip.Chip;
 
+import java.util.List;
+
 public class Meeting {
 
-    private String organisateur;
-    private Chip participant;
+    private List<String> participants;
     private long date;
-    private long hour;
     private String subject;
     private Room room;
 
 
-    public Meeting(Room room, String organisateur, Chip participant, long date, long hour, String subject) {
+    public Meeting(Room room, List<String> participants, long date, String subject) {
 
-        this.organisateur = organisateur;
-        this.participant = participant;
+        this.participants = participants;
         this.date = date;
-        this.hour = hour;
         this.subject = subject;
         this.room = room;
 
 
     }
 
-    public String getOrganisateur() {
-        return organisateur;
+
+    public List<String> getParticipants() {
+        return participants;
     }
 
-    public void setOrganisateur(String organisateur) {
-        this.organisateur = organisateur;
-    }
-
-    public Chip getParticipant() {
-        return participant;
-    }
-
-    public void setParticipant(Chip participant) {
-        this.participant = participant;
+    public void setParticipants(List<String> participants) {
+        this.participants = participants;
     }
 
     public long getDate() {
@@ -46,14 +37,6 @@ public class Meeting {
 
     public void setDate(long date) {
         this.date = date;
-    }
-
-    public long getHour() {
-        return hour;
-    }
-
-    public void setHour(long hour) {
-        this.hour = hour;
     }
 
     public String getSubject() {
