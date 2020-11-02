@@ -1,14 +1,18 @@
 package com.downa.maru.Controller;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -23,6 +27,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -37,64 +42,76 @@ import butterknife.OnClick;
 public class AddMeetingActivity extends AppCompatActivity {
 
 
-    @Bind(R.id.SubjectLyt) TextInputLayout Subject;
-    ChipGroup mChipGroup = (ChipGroup) this.findViewById(R.id.Participant);
-    Button mAdd_Participant = (Button)this.findViewById(R.id.Btn_add);
-    TextView mDate = (TextView)this.findViewById(R.id.Date);
-    Button mOkDate= (Button)this.findViewById(R.id.Ok_Date);
-    TextView mHour = (TextView)this.findViewById(R.id.Hour);
-    Button mOkHour = (Button)this.findViewById(R.id.Ok_Hour);
 
-    Calendar c;
+
     DatePickerDialog mDatePickerDialog;
     TimePickerDialog mTimePickerDialog;
     Context mContext = this;
 
     Room mRoom;
+    List <Room> RoomList = RoomGenerator.generateRoom();
 
     int chipNumber;
 
-    int day;
-    int month;
-    int year;
-    int hour;
-    int minute;
 
     private ApiService mApiService;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_add_meeting);
         ButterKnife.bind(this);
 
+        @Bind(R.id.SubjectLyt) TextInputLayout Subject;
+        ChipGroup mChipGroup = (ChipGroup) this.findViewById(R.id.Participant);
+        Button mAdd_Participant = (Button)this.findViewById(R.id.Btn_add);
+        final TextView mDate = (TextView)this.findViewById(R.id.Date);
+        final Button mSelect_date= (Button)this.findViewById(R.id.select_date);
+        final TextView mHour = (TextView)this.findViewById(R.id.Hour);
+        Button mSelect_hour = (Button)this.findViewById(R.id.select_hour);
+        Spinner mSpinner = (Spinner) findViewById(R.id.RoomMeeting);
 
-        //Date Select Listener.
+
+mSelect_date.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+
         final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                mDate.setText(day + "/" + month + "/" + year);
-                    }
-                };
-        // Create DatePickerDialog
-        DatePickerDialog mDatePickerDialog = new DatePickerDialog(this, dateSetListener, day, month, year);
+            public void onDateSet(DatePicker view, int selectedDay, int selectedMonth, int selectedYear) {
 
-        // Show
-        mDatePickerDialog.show();
+                int day = selectedDay;
+               int month = selectedMonth;
+               int year = selectedYear;
 
-        // Time Select Listener.
+                mDate.setText(selectedDay + "/" + selectedMonth + "/" + selectedYear);
 
-        final TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hour, int minute) {
-               mDate.setText(hour + "/" + minute);
             }
         };
-        // Create TimePickerDialog
-        TimePickerDialog mTimePickerDialog = new TimePickerDialog(this, timeSetListener, hour, minute);
-        //Show
+        mDatePickerDialog.show();
+    }
+});
+
+
+
+mSelect_hour.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
+
+                int hour = selectedHour;
+                int minute = selectedMinute;
+
+                mHour.setText(selectedHour + "/" + selectedMinute);
+
+            }
+        };
         mTimePickerDialog.show();
-
-
+    }
+});
 
       mAdd_Participant.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -102,7 +119,6 @@ public class AddMeetingActivity extends AppCompatActivity {
 
               Chip chip = new Chip(AddMeetingActivity.this);
               chip.setText("chip" + chipNumber ++);
-              chip.setCheckable(true);
               chip.setCloseIcon(ContextCompat.getDrawable(AddMeetingActivity.this,R.drawable.ic_close_black_24dp));
               chip.setCloseIconVisible(true);
               mChipGroup.addView(chip,0);
@@ -120,6 +136,9 @@ public class AddMeetingActivity extends AppCompatActivity {
           }
 
           });
+      ArrayAdapter<Room> arrayAdapter = new ArrayAdapter<Room>(this,android.R.layout.simple_spinner_item,RoomList);
+      mSpinner.setAdapter(arrayAdapter);
+
       }
 
 /* Create Meeting

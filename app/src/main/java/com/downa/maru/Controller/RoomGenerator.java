@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import com.downa.maru.Model.Room;
 import com.downa.maru.R;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,5 +23,8 @@ new Room(R.drawable.avatar_yellow, "Hermes");
 new Room(R.drawable.avatar_purple, "Zeus");
 new Room (R.drawable.avatar_grey, "Hadès");
 new Room(R.drawable.avatar_darkblue, "Titan");
+    }
+
+    static List <Room> generateRoom(){return new ArrayList<>(RoomList);
     }
 }

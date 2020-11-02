@@ -14,7 +14,7 @@
             android:orientation="vertical">
 
         <Spinner
-            android:id="@+id/Room"
+            android:id="@+id/RoomMeeting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -37,15 +37,15 @@
                 android:id="@+id/Date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/selectionnez_une_date"
+                android:text="@string/date"
                 android:textSize="20sp"/>
             <Button
-                android:id="@+id/Ok_Date"
+                android:id="@+id/select_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginStart="20dp"
-                android:text="@string/ok"
+                android:text="@string/selectionnez_une_date"
                 android:layout_marginLeft="20dp" />
         </LinearLayout>
 
@@ -57,15 +57,15 @@
                     android:id="@+id/Hour"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Selectionnez l'heure"
+                    android:text="@string/heure"
                     android:textSize="20sp"/>
                 <Button
-                    android:id="@+id/Ok_Hour"
+                    android:id="@+id/select_hour"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginStart="20dp"
-                    android:text="@string/ok"
+                    android:text="@string/selectionnez_une_heure"
                     android:layout_marginLeft="20dp" />
 "
             </LinearLayout>
