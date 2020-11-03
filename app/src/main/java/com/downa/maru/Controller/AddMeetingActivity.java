@@ -41,7 +41,11 @@ import butterknife.OnClick;
 
 public class AddMeetingActivity extends AppCompatActivity {
 
-
+private int day = -1;
+private int month = -1;
+private int year = -1;
+private int hour = -1;
+private int minute = -1;
 
 
     DatePickerDialog mDatePickerDialog;
@@ -72,46 +76,11 @@ public class AddMeetingActivity extends AppCompatActivity {
         Button mSelect_hour = (Button)this.findViewById(R.id.select_hour);
         Spinner mSpinner = (Spinner) findViewById(R.id.RoomMeeting);
 
-
-mSelect_date.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-
-        final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int selectedDay, int selectedMonth, int selectedYear) {
-
-                int day = selectedDay;
-               int month = selectedMonth;
-               int year = selectedYear;
-
-                mDate.setText(selectedDay + "/" + selectedMonth + "/" + selectedYear);
-
-            }
-        };
-        mDatePickerDialog.show();
-    }
-});
+        initDatePicker();
+        initTimePicker();
 
 
 
-mSelect_hour.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
-
-                int hour = selectedHour;
-                int minute = selectedMinute;
-
-                mHour.setText(selectedHour + "/" + selectedMinute);
-
-            }
-        };
-        mTimePickerDialog.show();
-    }
-});
 
       mAdd_Participant.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -140,6 +109,58 @@ mSelect_hour.setOnClickListener(new View.OnClickListener() {
       mSpinner.setAdapter(arrayAdapter);
 
       }
+
+    private void initDatePicker(){
+        final TextView mDate = findViewById(R.id.Date);
+        final Button mSelect_date = findViewById(R.id.select_date);
+        final DatePickerDialog mDatePickerDialog = new DatePickerDialog(this);
+        mDatePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int selectedDay, int selectedMonth, int selectedYear) {
+
+                day= selectedDay;
+                month= selectedMonth;
+                year= selectedYear;
+
+                mDate.setText(selectedDay + "/" + selectedMonth + "/" + selectedYear);
+
+            }
+        });
+
+        mSelect_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDatePickerDialog.show();
+            }
+        });
+
+    }
+
+    private void initTimePicker(){
+        final TextView mHour = findViewById(R.id.Hour);
+        final Button mSelect_hour = findViewById(R.id.select_hour);
+
+        final TimePickerDialog mTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
+
+                hour = selectedHour;
+                minute = selectedMinute;
+
+                mHour.setText(selectedHour + "/" + selectedMinute);
+
+            }
+        }9,0, true);
+
+        mSelect_hour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTimePickerDialog.show();
+            }
+        });
+    }
+
+
 
 /* Create Meeting
 
