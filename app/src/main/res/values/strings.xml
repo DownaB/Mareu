@@ -24,4 +24,5 @@
     <string name="ok">Ok</string>
     <string name="heure">heure</string>
     <string name="selectionnez_une_heure">selectionnez une heure</string>
+    <string name="Email">Email Validé</string>
 </resources>

@@ -6,6 +6,10 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
+import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +24,7 @@ import com.downa.maru.Service.ApiService;
 import com.downa.maru.Model.Meeting;
 import com.downa.maru.Model.Room;
 import com.downa.maru.R;
+import com.downa.maru.databinding.ActivityMainBinding;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
@@ -47,10 +52,7 @@ private int year = -1;
 private int hour = -1;
 private int minute = -1;
 
-
-    DatePickerDialog mDatePickerDialog;
-    TimePickerDialog mTimePickerDialog;
-    Context mContext = this;
+private ActivityAddMeetingBinding binding;
 
     Room mRoom;
     List <Room> RoomList = RoomGenerator.generateRoom();
@@ -64,39 +66,51 @@ private int minute = -1;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activty_add_meeting);
-        ButterKnife.bind(this);
 
-        @Bind(R.id.SubjectLyt) TextInputLayout Subject;
+        binding = ActivityAddMeetingBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+
+        val binding = ActivityAddMeetingBinding.inflate(LayoutInflater);
+        setContentView(binding.root);
+
+
+        binding.SubjectLyt.text = "sujet";
         ChipGroup mChipGroup = (ChipGroup) this.findViewById(R.id.Participant);
-        Button mAdd_Participant = (Button)this.findViewById(R.id.Btn_add);
-        final TextView mDate = (TextView)this.findViewById(R.id.Date);
-        final Button mSelect_date= (Button)this.findViewById(R.id.select_date);
-        final TextView mHour = (TextView)this.findViewById(R.id.Hour);
-        Button mSelect_hour = (Button)this.findViewById(R.id.select_hour);
+
         Spinner mSpinner = (Spinner) findViewById(R.id.RoomMeeting);
 
         initDatePicker();
         initTimePicker();
 
 
-
-
       mAdd_Participant.setOnClickListener(new View.OnClickListener() {
+          binding.button.setOnClickListener(new View.OnClickListener(){
+              Btn_add.userClicked()});
+
           @Override
           public void onClick(View v) {
+              binding.Input.editText;
+
+              String mEmail = this.editText.getText().toString();
 
               Chip chip = new Chip(AddMeetingActivity.this);
-              chip.setText("chip" + chipNumber ++);
+              chip.setText(mEmail + chipNumber ++);
               chip.setCloseIcon(ContextCompat.getDrawable(AddMeetingActivity.this,R.drawable.ic_close_black_24dp));
               chip.setCloseIconVisible(true);
               mChipGroup.addView(chip,0);
+
+              String email = "^[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\.[A_Za-z]{2,4}$";
+              if (Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                  Log.i(getString(R.string.Email));
+              }
 
               chip.setOnCloseIconClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View v) {
 
                       mChipGroup.removeView(v);
+
 
                   }
               });
@@ -128,6 +142,7 @@ private int minute = -1;
         });
 
         mSelect_date.setOnClickListener(new View.OnClickListener() {
+            binding.button.setOnClickListener(new.View.OnClickListener){mSelect_date.userClicked()});
             @Override
             public void onClick(View view) {
                 mDatePickerDialog.show();
@@ -150,7 +165,7 @@ private int minute = -1;
                 mHour.setText(selectedHour + "/" + selectedMinute);
 
             }
-        }9,0, true);
+        },9,0, true);
 
         mSelect_hour.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,9 +177,8 @@ private int minute = -1;
 
 
 
-/* Create Meeting
 
-
+binding.button.setOnClickListener(new.View.OnClickListener){Create.userClicked()});
 @OnClick(R.id.Create)
     void addMeeting() {
         Meeting meeting = new Meeting (
@@ -172,15 +186,15 @@ private int minute = -1;
                 mChipGroup,
                 mDatePickerDialog,
                 mTimePickerDialog,
-                Subject.getEditText().getText().toString());
+                Subject);
 
         mApiService.createMeeting(meeting);
 }
 
- */
-/* Recycler View
-
     public static class MainActivity extends AppCompatActivity {
+
+        binding = MeetingRecyclerviewBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
 
         @Bind(R.id.meeting_recyclerview)
         private RecyclerView mRecyclerView;
@@ -189,8 +203,10 @@ private int minute = -1;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+
+            binding = ActivityMainBinding.inflate(getLayoutInflater());
+            View view = binding.getRoot();
             setContentView(R.layout.activity_main);
-            ButterKnife.bind(this);
 
             List<Meeting> ListMeeting = new ArrayList<>();
 
@@ -200,6 +216,6 @@ private int minute = -1;
         }
 
     }
-   */
+
 
 }
