@@ -76,53 +76,17 @@ private ActivityAddMeetingBinding binding;
 
 
         binding.SubjectLyt.text = "sujet";
-        ChipGroup mChipGroup = (ChipGroup) this.findViewById(R.id.Participant);
 
-        Spinner mSpinner = (Spinner) findViewById(R.id.RoomMeeting);
 
         initDatePicker();
         initTimePicker();
+        initAddChip();
+        initSpinnerRoom();
+    }
 
 
-      mAdd_Participant.setOnClickListener(new View.OnClickListener() {
-          binding.button.setOnClickListener(new View.OnClickListener(){
-              Btn_add.userClicked()});
-
-          @Override
-          public void onClick(View v) {
-              binding.Input.editText;
-
-              String mEmail = this.editText.getText().toString();
-
-              Chip chip = new Chip(AddMeetingActivity.this);
-              chip.setText(mEmail + chipNumber ++);
-              chip.setCloseIcon(ContextCompat.getDrawable(AddMeetingActivity.this,R.drawable.ic_close_black_24dp));
-              chip.setCloseIconVisible(true);
-              mChipGroup.addView(chip,0);
-
-              String email = "^[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\.[A_Za-z]{2,4}$";
-              if (Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                  Log.i(getString(R.string.Email));
-              }
-
-              chip.setOnCloseIconClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View v) {
-
-                      mChipGroup.removeView(v);
 
 
-                  }
-              });
-
-
-          }
-
-          });
-      ArrayAdapter<Room> arrayAdapter = new ArrayAdapter<Room>(this,android.R.layout.simple_spinner_item,RoomList);
-      mSpinner.setAdapter(arrayAdapter);
-
-      }
 
     private void initDatePicker(){
         final TextView mDate = findViewById(R.id.Date);
@@ -173,6 +137,51 @@ private ActivityAddMeetingBinding binding;
                 mTimePickerDialog.show();
             }
         });
+    }
+
+    private void initAddChip(){
+        ChipGroup mChipGroup = (ChipGroup) this.findViewById(R.id.Participant);
+        binding.Participant.ChipGroup;
+
+        binding.Input.editText;
+        String mEmail = binding.Input.getText().toString();
+
+        if (Patterns.EMAIL_ADDRESS.matcher(mEmail).matches()){
+            Log.i(getString(R.string.Email))};
+
+        mAdd_Participant.setOnClickListener(new View.OnClickListener() {
+        binding.button.setOnClickListener(new View.OnClickListener(){
+        Btn_add.userClicked())};
+
+    @Override
+    public void onClick(View v) {
+
+        Chip chip = new Chip(AddMeetingActivity.this);
+        chip.setText(mEmail + chipNumber ++);
+        chip.setCloseIcon(ContextCompat.getDrawable(AddMeetingActivity.this,R.drawable.ic_close_black_24dp));
+        chip.setCloseIconVisible(true);
+        binding.Participant.addView(chip,0);
+
+        }
+        chip.setOnCloseIconClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+
+        binding.Participant.removeView(v);
+
+        }
+        });
+
+        }
+    }
+
+    private void initSpinnerRoom(){
+        Spinner mSpinner = (Spinner) findViewById(R.id.RoomMeeting);
+        binding.RoomMeeting.Spinner;
+
+        ArrayAdapter<Room> arrayAdapter = new ArrayAdapter<Room>(this,android.R.layout.simple_spinner_item,RoomList);
+        binding.RoomMeeting.setAdapter(arrayAdapter);
+
     }
 
 
