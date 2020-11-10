@@ -19,11 +19,13 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.downa.maru.Service.ApiService;
 import com.downa.maru.Model.Meeting;
 import com.downa.maru.Model.Room;
 import com.downa.maru.R;
+import com.downa.maru.databinding.ActivityAddMeetingBinding;
 import com.downa.maru.databinding.ActivityMainBinding;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -40,11 +42,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class AddMeetingActivity extends AppCompatActivity {
+
+public class AddMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 private int day = -1;
 private int month = -1;
@@ -56,6 +56,7 @@ private ActivityAddMeetingBinding binding;
 
     Room mRoom;
     List <Room> RoomList = RoomGenerator.generateRoom();
+
 
     int chipNumber;
 
@@ -71,42 +72,35 @@ private ActivityAddMeetingBinding binding;
         View view = binding.getRoot();
         setContentView(view);
 
-        val binding = ActivityAddMeetingBinding.inflate(LayoutInflater);
-        setContentView(binding.root);
-
-
-        binding.SubjectLyt.text = "sujet";
+//        binding.SubjectLyt.setText();
 
 
         initDatePicker();
         initTimePicker();
         initAddChip();
         initSpinnerRoom();
+//        initAddMeeting();
     }
 
 
+    private void initDatePicker() {
 
-
-
-    private void initDatePicker(){
-        final TextView mDate = findViewById(R.id.Date);
-        final Button mSelect_date = findViewById(R.id.select_date);
-        final DatePickerDialog mDatePickerDialog = new DatePickerDialog(this);
-        mDatePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+        final DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int selectedDay, int selectedMonth, int selectedYear) {
 
-                day= selectedDay;
-                month= selectedMonth;
+                day=selectedDay;
+                month=selectedMonth;
                 year= selectedYear;
 
-                mDate.setText(selectedDay + "/" + selectedMonth + "/" + selectedYear);
-
+                binding.Date.setText(selectedDay + "/" + selectedMonth++ + "/" + selectedYear);
             }
-        });
+        };
 
-        mSelect_date.setOnClickListener(new View.OnClickListener() {
-            binding.button.setOnClickListener(new.View.OnClickListener){mSelect_date.userClicked()});
+        final Calendar c = Calendar.getInstance();
+        final DatePickerDialog mDatePickerDialog = new DatePickerDialog(this, listener, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
+
+        binding.selectDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDatePickerDialog.show();
@@ -115,9 +109,8 @@ private ActivityAddMeetingBinding binding;
 
     }
 
+
     private void initTimePicker(){
-        final TextView mHour = findViewById(R.id.Hour);
-        final Button mSelect_hour = findViewById(R.id.select_hour);
 
         final TimePickerDialog mTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -126,12 +119,12 @@ private ActivityAddMeetingBinding binding;
                 hour = selectedHour;
                 minute = selectedMinute;
 
-                mHour.setText(selectedHour + "/" + selectedMinute);
+                binding.Hour.setText(selectedHour + ":" + selectedMinute);
 
             }
         },9,0, true);
 
-        mSelect_hour.setOnClickListener(new View.OnClickListener() {
+        binding.selectHour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mTimePickerDialog.show();
@@ -140,91 +133,71 @@ private ActivityAddMeetingBinding binding;
     }
 
     private void initAddChip(){
-        ChipGroup mChipGroup = (ChipGroup) this.findViewById(R.id.Participant);
-        binding.Participant.ChipGroup;
 
-        binding.Input.editText;
-        String mEmail = binding.Input.getText().toString();
+        final String mEmail = binding.Input.getText().toString();
 
-        if (Patterns.EMAIL_ADDRESS.matcher(mEmail).matches()){
-            Log.i(getString(R.string.Email))};
+        Patterns.EMAIL_ADDRESS.matcher(mEmail).matches();
 
-        mAdd_Participant.setOnClickListener(new View.OnClickListener() {
-        binding.button.setOnClickListener(new View.OnClickListener(){
-        Btn_add.userClicked())};
+        binding.BtnAdd.setOnClickListener(new View.OnClickListener() {
 
-    @Override
-    public void onClick(View v) {
+            @Override
+            public void onClick(View view) {
+                Chip chip = new Chip(AddMeetingActivity.this);
+                chip.setText(mEmail + chipNumber ++);
+                chip.setCloseIcon(ContextCompat.getDrawable(AddMeetingActivity.this,R.drawable.ic_close_black_24dp));
+                chip.setCloseIconVisible(true);
+                binding.Participant.addView(chip,0);
 
-        Chip chip = new Chip(AddMeetingActivity.this);
-        chip.setText(mEmail + chipNumber ++);
-        chip.setCloseIcon(ContextCompat.getDrawable(AddMeetingActivity.this,R.drawable.ic_close_black_24dp));
-        chip.setCloseIconVisible(true);
-        binding.Participant.addView(chip,0);
+            }
 
-        }
-        chip.setOnCloseIconClickListener(new View.OnClickListener() {
+        });
+        binding.Chip.setOnCloseIconClickListener(new View.OnClickListener() {
+
     @Override
     public void onClick(View v) {
 
         binding.Participant.removeView(v);
-
         }
         });
 
         }
-    }
 
-    private void initSpinnerRoom(){
-        Spinner mSpinner = (Spinner) findViewById(R.id.RoomMeeting);
-        binding.RoomMeeting.Spinner;
+    private void initSpinnerRoom() {
 
-        ArrayAdapter<Room> arrayAdapter = new ArrayAdapter<Room>(this,android.R.layout.simple_spinner_item,RoomList);
+        ArrayAdapter<Room> arrayAdapter = new ArrayAdapter<Room>(this, android.R.layout.simple_spinner_item, RoomList);
         binding.RoomMeeting.setAdapter(arrayAdapter);
 
+        binding.RoomMeeting.setOnItemSelectedListener(this);
     }
-
-
-
-
-binding.button.setOnClickListener(new.View.OnClickListener){Create.userClicked()});
-@OnClick(R.id.Create)
-    void addMeeting() {
-        Meeting meeting = new Meeting (
-                mRoom,
-                mChipGroup,
-                mDatePickerDialog,
-                mTimePickerDialog,
-                Subject);
-
-        mApiService.createMeeting(meeting);
-}
-
-    public static class MainActivity extends AppCompatActivity {
-
-        binding = MeetingRecyclerviewBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-
-        @Bind(R.id.meeting_recyclerview)
-        private RecyclerView mRecyclerView;
-        private ApiService.MeetingAdapter mMeetingAdapter;
 
         @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
 
-            binding = ActivityMainBinding.inflate(getLayoutInflater());
-            View view = binding.getRoot();
-            setContentView(R.layout.activity_main);
+        String text = parent.getItemAtPosition(position).toString();
+            Toast.makeText(parent.getContext(),text,Toast.LENGTH_SHORT).show();
 
-            List<Meeting> ListMeeting = new ArrayList<>();
-
-
-            mAdapter = new ApiService.MeetingAdapter(ListMeeting);
-            mRecyclerView.setAdapter(mAdapter);
         }
 
-    }
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+
+
+
+    /*private void initAddMeeting(){
+    binding.Create.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Meeting meeting = new Meeting(mRoom, RoomList, long date, subject);
+
+                    mApiService.createMeeting(meeting);
+        }
+    });
+
+}*/
+
+
 
 
 }
