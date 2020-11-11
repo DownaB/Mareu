@@ -198,17 +198,17 @@ private ActivityAddMeetingBinding binding;
 
 
 
-    private void initAddMeeting(){
+ /*   private void initAddMeeting(){
     binding.Create.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Meeting meeting = new Meeting(mRoom, RoomList,long date, subject);
+            Meeting meeting = new Meeting(RoomList,List<String> chip,long date, );
 
                     mApiService.createMeeting(meeting);
         }
     });
 
-}
+}*/
 
 
 
