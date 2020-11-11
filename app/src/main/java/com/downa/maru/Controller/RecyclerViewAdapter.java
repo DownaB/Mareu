@@ -11,34 +11,27 @@ import com.downa.maru.databinding.ActivityMainBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivity extends AppCompatActivity {
+public class RecyclerViewAdapter extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private MeetingAdapter mMeetingAdapter;
     private ActivityMainBinding binding;
 
+    private RecyclerView mRecyclerView;
+    private MeetingAdapter mMeetingAdapter;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 
-        List<Meeting> meetingList = new ArrayList<>();
+        List<Meeting> ListMeeting = new ArrayList<>();
 
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mMeetingAdapter = new MeetingAdapter(meetingList);
-        binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
+        mAdapter = new MeetingAdapter(ListMeeting);
+        mRecyclerView.setAdapter(mAdapter);
     }
-
-
 }
-

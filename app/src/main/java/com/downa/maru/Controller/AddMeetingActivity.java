@@ -54,6 +54,7 @@ private int minute = -1;
 
 private ActivityAddMeetingBinding binding;
 
+
     Room mRoom;
     List <Room> RoomList = RoomGenerator.generateRoom();
 
@@ -196,7 +197,6 @@ private ActivityAddMeetingBinding binding;
     });
 
 }*/
-
 
 
 
