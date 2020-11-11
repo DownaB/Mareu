@@ -73,13 +73,13 @@ private ActivityAddMeetingBinding binding;
         View view = binding.getRoot();
         setContentView(view);
 
-//        binding.SubjectLyt.setText();
-
 
         initDatePicker();
         initTimePicker();
         initAddChip();
         initSpinnerRoom();
+        initSubject();
+        initName();
 //        initAddMeeting();
     }
 
@@ -184,19 +184,31 @@ private ActivityAddMeetingBinding binding;
 
         }
 
+        public void initSubject(){
+
+        final String Subject = binding.SubjectLyt.getText().toString();
+        System.out.println(Subject);
+        }
+
+        public void initName(){
+
+        final String Name = binding.NameLyt.getText().toString();
+        System.out.println(Name);
+        }
 
 
-    /*private void initAddMeeting(){
+
+    private void initAddMeeting(){
     binding.Create.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Meeting meeting = new Meeting(mRoom, RoomList, long date, subject);
+            Meeting meeting = new Meeting(mRoom, RoomList,long date, subject);
 
                     mApiService.createMeeting(meeting);
         }
     });
 
-}*/
+}
 
 
 
