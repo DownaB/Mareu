@@ -14,7 +14,7 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-/*public class RecyclerViewAdapter extends AppCompatActivity {
+public class RecyclerViewAdapter extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
@@ -34,4 +34,4 @@ import androidx.recyclerview.widget.RecyclerView;
         mAdapter = new MeetingAdapter(ListMeeting);
         mRecyclerView.setAdapter(mAdapter);
     }
-}*/
+}

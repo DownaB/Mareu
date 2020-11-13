@@ -32,6 +32,7 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -59,6 +60,7 @@ private ActivityAddMeetingBinding binding;
     List <Room> RoomList = RoomGenerator.generateRoom();
 
 
+
     int chipNumber;
 
 
@@ -79,8 +81,7 @@ private ActivityAddMeetingBinding binding;
         initAddChip();
         initSpinnerRoom();
         initSubject();
-        initName();
-//        initAddMeeting();
+        initAddMeeting();
     }
 
 
@@ -133,20 +134,26 @@ private ActivityAddMeetingBinding binding;
         });
     }
 
+    private static long initGetTimeInMillis (int day, int month, int year, int hour, int minute){
+        Calendar c = Calendar.getInstance();
+        c.set(day, month, year, hour, minute);
+        return c.getTimeInMillis();
+    }
+
     private void initAddChip(){
-
-        final String mEmail = binding.Input.getText().toString();
-
-        Patterns.EMAIL_ADDRESS.matcher(mEmail).matches();
 
         binding.BtnAdd.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
+                final String mEmail = binding.Input.getText().toString();
+
+                Patterns.EMAIL_ADDRESS.matcher(mEmail).matches();
                 Chip chip = new Chip(AddMeetingActivity.this);
                 chip.setText(mEmail + chipNumber ++);
                 chip.setCloseIcon(ContextCompat.getDrawable(AddMeetingActivity.this,R.drawable.ic_close_black_24dp));
                 chip.setCloseIconVisible(true);
+                chip.setOnCloseIconClickListener();
                 binding.Participant.addView(chip,0);
 
             }
@@ -162,6 +169,8 @@ private ActivityAddMeetingBinding binding;
         });
 
         }
+
+
 
     private void initSpinnerRoom() {
 
@@ -190,25 +199,21 @@ private ActivityAddMeetingBinding binding;
         System.out.println(Subject);
         }
 
-        public void initName(){
-
-        final String Name = binding.NameLyt.getText().toString();
-        System.out.println(Name);
-        }
 
 
 
- /*   private void initAddMeeting(){
+
+    private void initAddMeeting(){
     binding.Create.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Meeting meeting = new Meeting(RoomList,List<String> chip,long date, );
+            Meeting meeting = new Meeting(RoomList,RoomList,long initGetTimeInMillis,  );
 
                     mApiService.createMeeting(meeting);
         }
     });
 
-}*/
+}
 
 
 
