@@ -31,6 +31,11 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.w3c.dom.ls.LSResourceResolver;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -38,6 +43,11 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.validation.Validator;
+
+import androidx.annotation.CheckResult;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,7 +55,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class AddMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+
+public class AddMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener implements ValidationListener {
 
 private int day = -1;
 private int month = -1;
@@ -56,15 +68,15 @@ private int minute = -1;
 private ActivityAddMeetingBinding binding;
 
 
-    Room mRoom;
-    List <Room> RoomList = RoomGenerator.generateRoom();
+private List <Room> RoomList = RoomGenerator.generateRoom();
+
+private Validator mValidator;
+
+private ApiService mApiService;
 
 
 
-    int chipNumber;
 
-
-    private ApiService mApiService;
 
 
     @Override
@@ -81,6 +93,7 @@ private ActivityAddMeetingBinding binding;
         initAddChip();
         initSpinnerRoom();
         initSubject();
+        initValidator();
         initAddMeeting();
     }
 
@@ -100,7 +113,7 @@ private ActivityAddMeetingBinding binding;
         };
 
         final Calendar c = Calendar.getInstance();
-        final DatePickerDialog mDatePickerDialog = new DatePickerDialog(this, listener, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
+        final DatePickerDialog mDatePickerDialog = new DatePickerDialog(this, listener, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
         binding.selectDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,11 +147,7 @@ private ActivityAddMeetingBinding binding;
         });
     }
 
-    private static long initGetTimeInMillis (int day, int month, int year, int hour, int minute){
-        Calendar c = Calendar.getInstance();
-        c.set(day, month, year, hour, minute);
-        return c.getTimeInMillis();
-    }
+
 
     private void initAddChip(){
 
@@ -148,28 +157,30 @@ private ActivityAddMeetingBinding binding;
             public void onClick(View view) {
                 final String mEmail = binding.Input.getText().toString();
 
-                Patterns.EMAIL_ADDRESS.matcher(mEmail).matches();
-                Chip chip = new Chip(AddMeetingActivity.this);
-                chip.setText(mEmail + chipNumber ++);
-                chip.setCloseIcon(ContextCompat.getDrawable(AddMeetingActivity.this,R.drawable.ic_close_black_24dp));
-                chip.setCloseIconVisible(true);
-                chip.setOnCloseIconClickListener();
-                binding.Participant.addView(chip,0);
+                if (Patterns.EMAIL_ADDRESS.matcher(mEmail).matches()) {
+                    Chip chip = new Chip(AddMeetingActivity.this);
+                    chip.setText(mEmail);
+                    chip.setCloseIcon(ContextCompat.getDrawable(AddMeetingActivity.this, R.drawable.ic_close_black_24dp));
+                    chip.setCloseIconVisible(true);
+                    chip.setOnCloseIconClickListener(new View.OnClickListener() {
 
+                        @Override
+                        public void onClick(View v) {
+
+                            binding.Participant.removeView(v);
+                        }
+                    });
+                    binding.Participant.addView(chip, 0);
+
+                } else {
+                    Toast.makeText(AddMeetingActivity.this,"l'email saisie n'est pas valide",Toast.LENGTH_LONG).show();
+                }
             }
 
         });
-        binding.Chip.setOnCloseIconClickListener(new View.OnClickListener() {
 
-    @Override
-    public void onClick(View v) {
-
-        binding.Participant.removeView(v);
-        }
-        });
 
         }
-
 
 
     private void initSpinnerRoom() {
@@ -199,15 +210,49 @@ private ActivityAddMeetingBinding binding;
         System.out.println(Subject);
         }
 
+        private void initValidator(){
 
+        mValidator = new Validator(this);
+        mValidator.setValidationListner(this);
+
+        public void onValidationSucceeded(){
+
+            initAddMeeting();
+
+            }
+
+            public void onValidationFailed(){
+
+                Toast.makeText(AddMeetingActivity.this, "Le formulaire n'est pas complet", Toast.LENGTH_SHORT).show();
+            }
+
+        }
 
 
 
     private void initAddMeeting(){
     binding.Create.setOnClickListener(new View.OnClickListener() {
+
+        @Checked
+        binding.RoomList;
+
+        @Order (value = 1)
+        @NotEmpty
+        binding.Participant;
+
+        @Checked
+        binding.select_date;
+
+        @Checked
+        binding.select_hour;
+
+        @NotEmpty
+        binding.SubjectLyt;
+
+
         @Override
         public void onClick(View view) {
-            Meeting meeting = new Meeting(RoomList,RoomList,long initGetTimeInMillis,  );
+            Meeting meeting = new Meeting(RoomList,RoomList,day,month,year,hour,minute, );
 
                     mApiService.createMeeting(meeting);
         }

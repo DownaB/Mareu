@@ -2,6 +2,7 @@ package com.downa.maru.Model;
 
 import com.google.android.material.chip.Chip;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class Meeting {
@@ -12,14 +13,20 @@ public class Meeting {
     private Room room;
 
 
-    public Meeting(Room room, List<String> participants, long date, String subject) {
+    public Meeting(Room room, List<String> participants, int day, int month, int year, int hour, int minute, String subject) {
 
         this.participants = participants;
-        this.date = date;
+        this.date = initGetTimeInMillis(day, month, year,  hour,  minute);
         this.subject = subject;
         this.room = room;
 
 
+    }
+
+    private long initGetTimeInMillis (int day, int month, int year, int hour, int minute){
+        Calendar c = Calendar.getInstance();
+        c.set(day, month, year, hour, minute);
+        return c.getTimeInMillis();
     }
 
 

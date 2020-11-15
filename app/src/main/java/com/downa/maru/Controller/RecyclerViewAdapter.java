@@ -18,7 +18,6 @@ public class RecyclerViewAdapter extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    private RecyclerView mRecyclerView;
     private MeetingAdapter mMeetingAdapter;
 
     @Override
@@ -31,7 +30,7 @@ public class RecyclerViewAdapter extends AppCompatActivity {
 
         List<Meeting> ListMeeting = new ArrayList<>();
 
-        mAdapter = new MeetingAdapter(ListMeeting);
-        mRecyclerView.setAdapter(mAdapter);
+        mMeetingAdapter = new MeetingAdapter(ListMeeting);
+        binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
     }
 }
