@@ -57,7 +57,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 
-public class AddMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener implements ValidationListener {
+public class AddMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 private int day = -1;
 private int month = -1;
@@ -70,7 +70,6 @@ private ActivityAddMeetingBinding binding;
 
 private List <Room> RoomList = RoomGenerator.generateRoom();
 
-private Validator mValidator;
 
 private ApiService mApiService;
 
@@ -93,7 +92,7 @@ private ApiService mApiService;
         initAddChip();
         initSpinnerRoom();
         initSubject();
-        initValidator();
+        initValidation();
         initAddMeeting();
     }
 
@@ -210,44 +209,27 @@ private ApiService mApiService;
         System.out.println(Subject);
         }
 
-        private void initValidator(){
+        private void initValidation(){
 
-        mValidator = new Validator(this);
-        mValidator.setValidationListner(this);
-
-        public void onValidationSucceeded(){
-
-            initAddMeeting();
-
+            if(binding.RoomMeeting.getSelectedItem().toString().trim().equals("")){
+                Toast.makeText(AddMeetingActivity.this,"merci de Selectionner une salle de réunion",Toast.LENGTH_SHORT).show();
             }
 
-            public void onValidationFailed(){
-
-                Toast.makeText(AddMeetingActivity.this, "Le formulaire n'est pas complet", Toast.LENGTH_SHORT).show();
+            if (binding.Input.getText() == null ||(binding.Input.getText() != null && (binding.Input.getText().toString().equals("")|| binding.Input.getText().toString().length()<1))){
+                Toast.makeText(AddMeetingActivity.this,"Merci d'entrer l'adresse mail d'un participant",Toast.LENGTH_SHORT).show();
             }
+
+            if(binding.SubjectLyt.getText() == null || (binding.SubjectLyt.getText() != null && (binding.SubjectLyt.getText().toString().equals("") || binding.SubjectLyt.getText().toString().length()<2))){
+            Toast.makeText(AddMeetingActivity.this,"Merci d'entrer le sujet de la réunion",Toast.LENGTH_SHORT).show();
 
         }
 
 
+        }
+
 
     private void initAddMeeting(){
     binding.Create.setOnClickListener(new View.OnClickListener() {
-
-        @Checked
-        binding.RoomList;
-
-        @Order (value = 1)
-        @NotEmpty
-        binding.Participant;
-
-        @Checked
-        binding.select_date;
-
-        @Checked
-        binding.select_hour;
-
-        @NotEmpty
-        binding.SubjectLyt;
 
 
         @Override
