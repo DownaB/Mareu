@@ -1,5 +1,6 @@
 package com.downa.maru.Controller;
 
+import android.accounts.Account;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -7,6 +8,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -65,10 +67,14 @@ private int year = -1;
 private int hour = -1;
 private int minute = -1;
 
+private String Subject;
+
 private ActivityAddMeetingBinding binding;
 
 
 private List <Room> RoomList = RoomGenerator.generateRoom();
+
+private List<String> Participants = (List<String>) binding.Participant;
 
 
 private ApiService mApiService;
@@ -211,22 +217,27 @@ private ApiService mApiService;
 
         private void initValidation(){
 
-            if(binding.RoomMeeting.getSelectedItem().toString().trim().equals("")){
-                Toast.makeText(AddMeetingActivity.this,"merci de Selectionner une salle de réunion",Toast.LENGTH_SHORT).show();
+            if (binding.Participant.getChildCount() <1){
+                Toast.makeText(AddMeetingActivity.this,"Merci d'entrer un participant", Toast.LENGTH_SHORT).show();
             }
 
-            if (binding.Input.getText() == null ||(binding.Input.getText() != null && (binding.Input.getText().toString().equals("")|| binding.Input.getText().toString().length()<1))){
-                Toast.makeText(AddMeetingActivity.this,"Merci d'entrer l'adresse mail d'un participant",Toast.LENGTH_SHORT).show();
+            if (TextUtils.isEmpty(binding.Date.getText()) == true){
+                Toast.makeText(AddMeetingActivity.this, "Merci d'entrer une date", Toast.LENGTH_SHORT).show();
             }
 
-            if(binding.SubjectLyt.getText() == null || (binding.SubjectLyt.getText() != null && (binding.SubjectLyt.getText().toString().equals("") || binding.SubjectLyt.getText().toString().length()<2))){
+            if (TextUtils.isEmpty(binding.Hour.getText()) == true){
+                Toast.makeText(AddMeetingActivity.this, "Merci d'entrer une heure", Toast.LENGTH_SHORT).show();
+            }
+
+            if(TextUtils.isEmpty(binding.Subject.getText()) == true){
             Toast.makeText(AddMeetingActivity.this,"Merci d'entrer le sujet de la réunion",Toast.LENGTH_SHORT).show();
 
-        }
+        }else{
+                initAddMeeting();
+            }
 
 
         }
-
 
     private void initAddMeeting(){
     binding.Create.setOnClickListener(new View.OnClickListener() {
@@ -234,7 +245,7 @@ private ApiService mApiService;
 
         @Override
         public void onClick(View view) {
-            Meeting meeting = new Meeting(RoomList,RoomList,day,month,year,hour,minute, );
+            Meeting meeting = new Meeting(RoomList,Participants,day,month,year,hour,minute, Subject);
 
                     mApiService.createMeeting(meeting);
         }
