@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
+
     private RecyclerView.LayoutManager mLayoutManager;
     private MeetingAdapter mMeetingAdapter;
     private ActivityMainBinding binding;
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         List<Meeting> meetingList = new ArrayList<>();
 
         mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        binding.meetingRecyclerview.setLayoutManager(mLayoutManager);
 
         mMeetingAdapter = new MeetingAdapter(meetingList);
         binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
