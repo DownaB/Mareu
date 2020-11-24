@@ -1,25 +1,15 @@
 package com.downa.maru.Controller;
 
-import android.accounts.Account;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -28,35 +18,19 @@ import com.downa.maru.Model.Meeting;
 import com.downa.maru.Model.Room;
 import com.downa.maru.R;
 import com.downa.maru.databinding.ActivityAddMeetingBinding;
-import com.downa.maru.databinding.ActivityMainBinding;
 import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.textfield.TextInputLayout;
 
-import org.w3c.dom.ls.LSResourceResolver;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-
-import java.io.IOException;
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.validation.Validator;
+import DI.DI;
 
-import androidx.annotation.CheckResult;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
-
+import androidx.fragment.app.FragmentActivity;
 
 
 public class AddMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -67,21 +41,12 @@ private int year = -1;
 private int hour = -1;
 private int minute = -1;
 
-private String Subject;
 
 private ActivityAddMeetingBinding binding;
 
-
 private List <Room> RoomList = RoomGenerator.generateRoom();
 
-private List<String> Participants = (List<String>) binding.Participant;
-
-
-private ApiService mApiService;
-
-
-
-
+private ApiService mApiService = DI.getMeeting();
 
 
     @Override
@@ -98,7 +63,6 @@ private ApiService mApiService;
         initAddChip();
         initSpinnerRoom();
         initSubject();
-        initValidation();
         initAddMeeting();
     }
 
@@ -211,7 +175,7 @@ private ApiService mApiService;
 
         public void initSubject(){
 
-        final String Subject = binding.SubjectLyt.getText().toString();
+        final String Subject = binding.Subject.getText().toString();
         System.out.println(Subject);
         }
 
@@ -221,19 +185,33 @@ private ApiService mApiService;
                 Toast.makeText(AddMeetingActivity.this,"Merci d'entrer un participant", Toast.LENGTH_SHORT).show();
             }
 
-            if (TextUtils.isEmpty(binding.Date.getText()) == true){
+            else if (TextUtils.isEmpty(binding.Date.getText()) == true){
                 Toast.makeText(AddMeetingActivity.this, "Merci d'entrer une date", Toast.LENGTH_SHORT).show();
             }
 
-            if (TextUtils.isEmpty(binding.Hour.getText()) == true){
+            else if (TextUtils.isEmpty(binding.Hour.getText()) == true){
                 Toast.makeText(AddMeetingActivity.this, "Merci d'entrer une heure", Toast.LENGTH_SHORT).show();
             }
 
-            if(TextUtils.isEmpty(binding.Subject.getText()) == true){
+            else if(TextUtils.isEmpty(binding.Subject.getText()) == true){
             Toast.makeText(AddMeetingActivity.this,"Merci d'entrer le sujet de la réunion",Toast.LENGTH_SHORT).show();
 
         }else{
-                initAddMeeting();
+                ArrayList<String> emails = new ArrayList<>();
+                for (int i =0; i<binding.Participant.getChildCount();i++){
+                final Chip chip = (Chip) binding.Participant.getChildAt(i);
+                final String email = chip.getText().toString();
+                emails.add(email);}
+
+                final Room room = (Room) binding.RoomMeeting.getSelectedItem();
+
+                Meeting meeting = new Meeting(room,emails,day,month,year,hour,minute, binding.Subject.getText().toString());
+
+                mApiService.createMeeting(meeting);
+
+                AddMeetingActivity.navigate(this);
+
+                finish();
             }
 
 
@@ -245,14 +223,15 @@ private ApiService mApiService;
 
         @Override
         public void onClick(View view) {
-            Meeting meeting = new Meeting(RoomList,Participants,day,month,year,hour,minute, Subject);
-
-                    mApiService.createMeeting(meeting);
+           initValidation();
         }
     });
 
 }
 
-
+    private static void navigate (FragmentActivity activity){
+        Intent intent = new Intent(activity,MainActivity.class);
+        ActivityCompat.startActivity(activity, intent, null);
+    }
 
 }

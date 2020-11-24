@@ -10,10 +10,10 @@ public class Meeting {
     private List<String> participants;
     private long date;
     private String subject;
-    private List <Room> room;
+    private Room room;
 
 
-    public Meeting(List<Room> room, List<String> participants, int day, int month, int year, int hour, int minute, String subject) {
+    public Meeting(Room room, List<String> participants, int day, int month, int year, int hour, int minute, String subject) {
 
         this.participants = participants;
         this.date = initGetTimeInMillis(day, month, year,  hour,  minute);

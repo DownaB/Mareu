@@ -101,13 +101,8 @@
                 android:text="@string/ajouter" />
 
 
-        <TextView
-            android:id="@+id/Subject"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <EditText
-            android:id="@+id/SubjectLyt"
+            android:id="@+id/Subject"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

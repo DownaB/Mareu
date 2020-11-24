@@ -1,18 +1,20 @@
 package com.downa.maru.Controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.downa.maru.Model.Meeting;
-import com.downa.maru.R;
 import com.downa.maru.Service.ApiService;
 import com.downa.maru.databinding.ActivityMainBinding;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import DI.DI;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private MeetingAdapter mMeetingAdapter;
     private ActivityMainBinding binding;
+    private ApiService mApiService = DI.getMeeting();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,14 +34,20 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        List<Meeting> meetingList = new ArrayList<>();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<Meeting> meetingList = mApiService.getMeeting();
         mLayoutManager = new LinearLayoutManager(this);
         binding.meetingRecyclerview.setLayoutManager(mLayoutManager);
 
         mMeetingAdapter = new MeetingAdapter(meetingList);
         binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
     }
+
+
 
 
 }
