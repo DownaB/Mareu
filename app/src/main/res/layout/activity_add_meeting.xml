@@ -18,16 +18,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/Menu_filtre"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:src="@drawable/ic_menu_black_24dp">
-
-                </com.google.android.material.floatingactionbutton.FloatingActionButton>
-
             </androidx.appcompat.widget.Toolbar>
 
         <Spinner

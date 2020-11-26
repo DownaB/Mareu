@@ -53,4 +53,12 @@ public class Meeting {
     public void setSubject(String subject) {
         this.subject = subject;
     }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 }

@@ -27,6 +27,6 @@ new Room(R.drawable.avatar_darkblue, "Titan")
             );
 
 
-    static List <Room> generateRoom(){return new ArrayList<>(RoomList);}
+    public static List <Room> generateRoom(){return new ArrayList<>(RoomList);}
 
 }

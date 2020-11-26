@@ -209,7 +209,7 @@ private ApiService mApiService = DI.getMeeting();
 
                 mApiService.createMeeting(meeting);
 
-                AddMeetingActivity.navigate(this);
+                navigate();
 
                 finish();
             }
@@ -228,10 +228,12 @@ private ApiService mApiService = DI.getMeeting();
     });
 
 }
+    public void navigate (){
+    Intent intent = new Intent(AddMeetingActivity.this, MainActivity.class);
+    startActivity(intent);
 
-    private static void navigate (FragmentActivity activity){
-        Intent intent = new Intent(activity,MainActivity.class);
-        ActivityCompat.startActivity(activity, intent, null);
+
     }
-
 }
+
+
