@@ -73,29 +73,7 @@ private ApiService mApiService = DI.getMeeting();
         initAddMeeting();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu,menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()){
-            case R.id.date:
-                MeetingApiService.filterByDate();
-                return true;
-            case R.id.meeting_room:
-                MeetingApiService.filterByRoom();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
 
     private void initDatePicker() {
 
