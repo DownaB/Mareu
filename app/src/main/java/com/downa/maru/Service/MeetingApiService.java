@@ -22,10 +22,10 @@ public class MeetingApiService implements ApiService {
     public void deleteMeeting(Meeting meeting) {meetings.remove(meeting);}
 
 
-    public Meeting filterByRoom (Room room){
+    public Meeting filterByRoom (Meeting meeting){
         final List <Meeting> byRoom = new ArrayList<>();
         for (Meeting theMeeting : meetings){
-            if (theMeeting.getRoom() == room.getName()){
+            if (theMeeting.getRoom() == meeting.getRoom()){
                 byRoom.add(theMeeting); ;
             }
         }
