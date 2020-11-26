@@ -22,17 +22,16 @@ public class MeetingApiService implements ApiService {
     public void deleteMeeting(Meeting meeting) {meetings.remove(meeting);}
 
 
-    public Meeting filterByRoom (Meeting meeting){
+    public void filterByRoom (Meeting meeting){
         final List <Meeting> byRoom = new ArrayList<>();
         for (Meeting theMeeting : meetings){
             if (theMeeting.getRoom() == meeting.getRoom()){
                 byRoom.add(theMeeting); ;
             }
         }
-        return (Meeting) byRoom;
     }
 
-    public Meeting filterByDate(Meeting meeting){
+    public void filterByDate(Meeting meeting){
         final List<Meeting> byHour = new ArrayList<>();
         for (Meeting theMeeting: meetings){
             if (theMeeting.getDate() == meeting.getDate()){
@@ -40,6 +39,5 @@ public class MeetingApiService implements ApiService {
             }
         }
 
-        return (Meeting) byHour;
     }
 }

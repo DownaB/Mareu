@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +20,9 @@ import com.downa.maru.Service.ApiService;
 import com.downa.maru.Model.Meeting;
 import com.downa.maru.Model.Room;
 import com.downa.maru.R;
+import com.downa.maru.Service.MeetingApiService;
 import com.downa.maru.databinding.ActivityAddMeetingBinding;
+import com.downa.maru.databinding.ToolbarBinding;
 import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
@@ -26,6 +31,7 @@ import java.util.List;
 
 import DI.DI;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -56,6 +62,7 @@ private ApiService mApiService = DI.getMeeting();
         binding = ActivityAddMeetingBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        setSupportActionBar(binding.Toolbar);
 
 
         initDatePicker();
@@ -66,6 +73,29 @@ private ApiService mApiService = DI.getMeeting();
         initAddMeeting();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.date:
+                MeetingApiService.filterByDate();
+                return true;
+            case R.id.meeting_room:
+                MeetingApiService.filterByRoom();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 
     private void initDatePicker() {
 
