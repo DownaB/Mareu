@@ -62,8 +62,6 @@ private ApiService mApiService = DI.getMeeting();
         binding = ActivityAddMeetingBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        setSupportActionBar(binding.Toolbar);
-
 
         initDatePicker();
         initTimePicker();
