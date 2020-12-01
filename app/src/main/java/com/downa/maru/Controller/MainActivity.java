@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.downa.maru.Model.Meeting;
+import com.downa.maru.Model.Room;
 import com.downa.maru.R;
 import com.downa.maru.Service.ApiService;
 import com.downa.maru.Service.MeetingApiService;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private ApiService mApiService = DI.getMeeting();
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +48,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         List<Meeting> meetingList = mApiService.getMeeting();
-        mLayoutManager = new LinearLayoutManager(this);
-        binding.meetingRecyclerview.setLayoutManager(mLayoutManager);
 
         mMeetingAdapter = new MeetingAdapter(meetingList);
         binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
+
+        binding.addMeeting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,AddMeetingActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
 
 
     @Override
@@ -66,10 +75,13 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.date:
-                MeetingApiService.filterByDate();
+                mApiService.filterByDate();
                 return true;
-            case R.id.meeting_room:
-                MeetingApiService.filterByRoom();
+            case R.id.meeting_rooms:
+                RoomGenerator.generateRoom();
+                return true;
+            case R.id.no_filter:
+                mApiService.getMeeting();
                 return true;
 
             default:
@@ -77,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 
 }
 

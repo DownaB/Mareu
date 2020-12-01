@@ -7,9 +7,26 @@
         app:showAsAction="never"
         android:title="@string/date"/>
 
-    <item android:id="@+id/meeting_room"
+
+    <item
+        android:id="@+id/room_list"
         android:orderInCategory="100"
         app:showAsAction="never"
-        android:title="@string/salle"/>
+        android:title="@string/salle">
+
+        <menu>
+            <item android:id="@+id/meeting_rooms"
+                android:title="liste des salles"/>
+
+        </menu>
+
+    </item>
+
+
+    <item
+        android:id="@+id/no_filter"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/effacer_les_filtres"/>
 
 </menu>

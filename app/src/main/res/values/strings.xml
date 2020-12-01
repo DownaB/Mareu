@@ -22,4 +22,5 @@
     <string name="selectionnez_une_heure">selectionnez une heure</string>
     <string name="Email">Email Validé</string>
     <string name="error_subject">Le sujet de la réunion n\'est pas renseigné</string>
+    <string name="effacer_les_filtres">effacer les filtres</string>
 </resources>
