@@ -19,8 +19,6 @@ public class Meeting {
         this.date = initGetTimeInMillis(day, month, year,  hour,  minute);
         this.subject = subject;
         this.room = room;
-
-
     }
 
     private long initGetTimeInMillis (int day, int month, int year, int hour, int minute){
