@@ -52,15 +52,16 @@ public class MeetingApiService implements ApiService {
     public List<Meeting> filterByDate() {
         final List<Meeting> byHour = new ArrayList<>();
 
-        final DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+        final DatePicker.OnDateChangedListener listener = new DatePicker.OnDateChangedListener() {
             @Override
-            public void onDateSet(DatePicker view, int selectedDay, int selectedMonth, int selectedYear) {
-
+            public void onDateChanged(DatePicker datePicker, int selectedDay, int selectedMonth, int selectedYear) {
                 day=selectedDay;
                 month=selectedMonth;
                 year= selectedYear;
             }
         };
+        final Calendar c = Calendar.getInstance();
+        final DatePicker mDatePicker = new DatePicker(this, listener, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
         for (Meeting theMeeting : meetings) {
             if (theMeeting.getDate()== day+month+year) {
