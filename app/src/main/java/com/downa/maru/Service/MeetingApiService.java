@@ -16,11 +16,8 @@ import java.util.List;
 
 public class MeetingApiService implements ApiService {
 
-    List<Meeting> meetings;
+    List<Meeting> meetings = new ArrayList<>();
 
-    private int day = -1;
-    private int month = -1;
-    private int year = -1;
 
     @Override
     public List<Meeting> getMeeting() {
@@ -38,10 +35,10 @@ public class MeetingApiService implements ApiService {
     }
 
     @Override
-    public List<Meeting> filterByRoom(Room room) {
+    public List<Meeting> filterByRoom(String room) {
         final List<Meeting> byRoom = new ArrayList<>();
         for (Meeting theMeeting : meetings) {
-            if (theMeeting.getRoom().getName().equals(room.getName())) {
+            if (theMeeting.getRoom().getName().equals(room)) {
                 byRoom.add(theMeeting);
             }
         }
@@ -49,22 +46,18 @@ public class MeetingApiService implements ApiService {
     }
 
     @Override
-    public List<Meeting> filterByDate() {
+    public List<Meeting> filterByDate(int year, int month, int dayOfMonth) {
         final List<Meeting> byHour = new ArrayList<>();
-
-        final DatePicker.OnDateChangedListener listener = new DatePicker.OnDateChangedListener() {
-            @Override
-            public void onDateChanged(DatePicker datePicker, int selectedDay, int selectedMonth, int selectedYear) {
-                day=selectedDay;
-                month=selectedMonth;
-                year= selectedYear;
-            }
-        };
-        final Calendar c = Calendar.getInstance();
-        final DatePicker mDatePicker = new DatePicker(this, listener, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        final Calendar selectedDate = Calendar.getInstance();
+        selectedDate.set(Calendar.YEAR, year);
+        selectedDate.set(Calendar.MONTH, month);
+        selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
         for (Meeting theMeeting : meetings) {
-            if (theMeeting.getDate()== day+month+year) {
+            final Calendar mCalendar = Calendar.getInstance();
+            mCalendar.setTimeInMillis(theMeeting.getDate());
+
+            if (selectedDate.get(Calendar.YEAR)== mCalendar.get(Calendar.YEAR) && selectedDate.get(Calendar.MONTH) == mCalendar.get(Calendar.MONTH) && selectedDate.get(Calendar.DAY_OF_MONTH) == mCalendar.get(Calendar.DAY_OF_MONTH)){
                 byHour.add(theMeeting);
             }
         }

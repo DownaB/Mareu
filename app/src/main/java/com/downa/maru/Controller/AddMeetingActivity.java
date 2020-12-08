@@ -34,6 +34,7 @@ import DI.DI;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -63,12 +64,16 @@ private ApiService mApiService = DI.getMeeting();
         View view = binding.getRoot();
         setContentView(view);
 
+        setSupportActionBar((Toolbar) binding.toolbar.getRoot());
+
         initDatePicker();
         initTimePicker();
         initAddChip();
         initSpinnerRoom();
         initSubject();
         initAddMeeting();
+        setupActionBar();
+
     }
 
 
@@ -238,8 +243,24 @@ private ApiService mApiService = DI.getMeeting();
     Intent intent = new Intent(AddMeetingActivity.this, MainActivity.class);
     startActivity(intent);
 
-
     }
+
+    private void setupActionBar() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
 
 

@@ -8,11 +8,15 @@
     android:layout_height="match_parent"
     tools:context=".Controller.MainActivity">
 
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
 <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/meeting_recyclerview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="vertical"
+    android:layout_below="@+id/toolbar"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

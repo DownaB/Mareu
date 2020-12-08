@@ -13,8 +13,8 @@ public interface ApiService {
 
     void deleteMeeting (Meeting meeting);
 
-    List<Meeting> filterByRoom (Room room);
+    List<Meeting> filterByRoom (String room);
 
-    List<Meeting> filterByDate();
+    List<Meeting> filterByDate(int year, int month, int dayOfMonth);
 
 }

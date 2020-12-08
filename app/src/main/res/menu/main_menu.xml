@@ -15,8 +15,6 @@
         android:title="@string/salle">
 
         <menu>
-            <item android:id="@+id/meeting_rooms"
-                android:title="liste des salles"/>
 
         </menu>
 
