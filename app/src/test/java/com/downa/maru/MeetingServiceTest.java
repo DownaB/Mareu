@@ -3,6 +3,7 @@ package com.downa.maru;
 import android.view.LayoutInflater;
 
 import com.downa.maru.Model.Meeting;
+import com.downa.maru.Model.Room;
 import com.downa.maru.Service.ApiService;
 import com.google.android.material.chip.Chip;
 
@@ -22,15 +23,17 @@ import static org.junit.Assert.assertTrue;
 public class MeetingServiceTest {
 
     private ApiService mService;
+    private List<Meeting> mMeetings;
 
     @Before
     public void setup(){mService = DI.getNewInstanceApiService(); }
+    public void addMeeting(){Meeting meeting = new Meeting(Room, List<String> participants, int day, int month, int year, int hour, int minute, String); }
 
     @Test
     public void addMeetingWithSuccess(){
-        Meeting meeting = mService.getMeeting().get(0);
+        addMeeting();
         mService.createMeeting(meeting);
-        assertEquals(1,mService.getMeeting().size());
+        mMeetings.add(meeting);
     }
 
     @Test

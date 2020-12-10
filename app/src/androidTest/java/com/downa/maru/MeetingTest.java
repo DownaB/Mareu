@@ -6,8 +6,12 @@ import android.util.Patterns;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import com.downa.maru.Model.Meeting;
+
 import org.hamcrest.Matchers;
 import org.junit.Test;
+
+import java.util.List;
 
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.ViewAction;
@@ -23,6 +27,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class MeetingTest {
+
+
 
     @Test
     public void checkIfClickAddMeeting_NewActivityLaunched(){

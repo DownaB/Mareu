@@ -21,6 +21,7 @@ public class Meeting {
         this.room = room;
     }
 
+
     private long initGetTimeInMillis (int day, int month, int year, int hour, int minute){
         Calendar c = Calendar.getInstance();
         c.set(day, month, year, hour, minute);
