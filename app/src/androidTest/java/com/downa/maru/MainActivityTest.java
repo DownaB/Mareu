@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.action.ViewActions;
@@ -48,7 +49,13 @@ public class MainActivityTest {
 
     }
 
-
+    @Test
+    public void checkIfClickMenu_SubMenuLaunched(){
+        onView(withId(R.layout.activity_main));
+        onView(withId(R.menu.main_menu));
+        onView(withId(R.id.room_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
+        onView(withId(R.id.room_list)).check(matches(withText("Aphrodite")));
+    }
 
 
 }

@@ -25,7 +25,7 @@ public class AddMeetingActivityTest {
         onView(isAssignableFrom(DatePicker.class)).perform(setDateInDatePicker(2020,12,8));
         onView(withId(R.id.Date)).check(matches(withText("8/12/2020")));
 
-        )}
+    }
 
     @Test
     public void setTimeInTimePicker(int hour, int minute){
