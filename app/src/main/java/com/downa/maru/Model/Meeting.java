@@ -1,7 +1,5 @@
 package com.downa.maru.Model;
 
-import com.google.android.material.chip.Chip;
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -24,7 +22,7 @@ public class Meeting {
 
     private long initGetTimeInMillis (int day, int month, int year, int hour, int minute){
         Calendar c = Calendar.getInstance();
-        c.set(day, month, year, hour, minute);
+        c.set(year, month, day, hour, minute);
         return c.getTimeInMillis();
     }
 
