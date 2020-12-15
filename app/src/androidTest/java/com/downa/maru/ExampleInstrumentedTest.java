@@ -24,4 +24,7 @@ public class ExampleInstrumentedTest {
 
         assertEquals("com.downa.maru", appContext.getPackageName());
     }
+
+    public static class AddMeetingActivityTest {
+    }
 }
