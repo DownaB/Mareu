@@ -21,6 +21,7 @@ public class AddMeetingActivityTest {
 
     @Test
     public void setDateInDatePicker(int year, int month, int dayOfMonth){
+        onView(withId(R.layout.activity_add_meeting));
         onView(withId(R.id.select_date)).perform(ViewActions.click());
         onView(isAssignableFrom(DatePicker.class)).perform(setDateInDatePicker(2020,12,8));
         onView(withId(R.id.Date)).check(matches(withText("8/12/2020")));
@@ -29,6 +30,7 @@ public class AddMeetingActivityTest {
 
     @Test
     public void setTimeInTimePicker(int hour, int minute){
+        onView(withId(R.layout.activity_add_meeting));
         onView(withId(R.id.select_hour)).perform(ViewActions.click());
         onView(isAssignableFrom(TimePicker.class)).perform(setTimeInTimePicker(13,00));
         onView(withId(R.id.Hour)).check(matches(withText("13:00")));
@@ -36,6 +38,7 @@ public class AddMeetingActivityTest {
 
     @Test
     public void spinnerTest(){
+        onView(withId(R.layout.activity_add_meeting));
         onView(withId(R.id.RoomMeeting)).perform(ViewActions.click());
         onView(Matchers.allOf(isDisplayed(), ViewMatchers.withId(R.id.RoomMeeting)))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, ViewActions.click()));
@@ -44,6 +47,7 @@ public class AddMeetingActivityTest {
 
     @Test
     public void addChipOnChipGroup(String mail){
+        onView(withId(R.layout.activity_add_meeting));
         onView(withId(R.id.Input)).perform(ViewActions.typeText(String.valueOf(Patterns.EMAIL_ADDRESS.matcher(mail).matches())));
         onView(withId(R.id.Btn_add)).perform(ViewActions.click());
         onView(withId(R.id.Participant)).check(matches(isDisplayed()));
@@ -51,6 +55,7 @@ public class AddMeetingActivityTest {
 
     @Test
     public void addMeeting(){
+        onView(withId(R.layout.activity_add_meeting));
         onView(withId(R.id.Create)).perform(ViewActions.click());
         onView(Matchers.allOf(isDisplayed(),ViewMatchers.withId(R.id.meeting_recyclerview))).check(withItemCount(1));
     }
