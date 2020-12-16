@@ -69,20 +69,21 @@ public class MeetingServiceTest {
     @Test
     public void filterByRoomWIthSuccess(){
         mService.createMeeting(generateMeeting());
-        Meeting meeting = mService.getMeeting().get(0);
-        assertTrue(meeting.getRoom().getName().matches("Aphrodite"));
-        assertFalse(meeting.getRoom().getName().matches("Zeus"));
+        List <Meeting> meetings = mService.filterByRoom("Aphrodite");
+        assertEquals(1,meetings.size());
+
+        meetings = mService.filterByRoom("Zeus");
+        assertEquals(0,meetings.size());
     }
 
     @Test
     public void filterByDateWithSuccess(){
         mService.createMeeting((generateMeeting()));
-        Meeting meeting = mService.getMeeting().get(0);
-        Calendar c = Calendar.getInstance();
-        c.set(2020,11,12,22,30);
+        List <Meeting> meetings = mService.filterByDate(2020,11,12);
+        assertEquals(1,meetings.size());
 
-        assertEquals(c.get(Calendar.YEAR,Calendar.MONTH,Calendar.DAY_OF_MONTH,Calendar.HOUR_OF_DAY,Calendar.MINUTE),meeting.getDate());
-        assertFalse();
+        meetings = mService.filterByDate(2020,11,14);
+        assertEquals(0,meetings.size());
     }
 
 }

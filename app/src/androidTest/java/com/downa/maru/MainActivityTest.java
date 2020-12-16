@@ -41,6 +41,13 @@ public class MainActivityTest {
     }
 
     @Test
+    public  void checkIfMenuLaunched(){
+        onView(withId(R.layout.activity_main));
+        onView(withId(R.menu.main_menu)).perform(ViewActions.click());
+        onView(withId(R.menu.main_menu)).check(matches(isDisplayed()));
+    }
+
+    @Test
     public void checkIfClickMenu_DatePickerLaunched(){
         onView(withId(R.layout.activity_main));
         onView(withId(R.menu.main_menu));
@@ -53,7 +60,7 @@ public class MainActivityTest {
     public void checkIfClickMenu_SubMenuLaunched(){
         onView(withId(R.layout.activity_main));
         onView(withId(R.menu.main_menu));
-        onView(withId(R.id.room_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
+        onView(withId(R.id.room_list)).perform(RecyclerViewAction.actionOnItemPosition(0, ViewActions.click()));
         onView(withId(R.id.room_list)).check(matches(withText("Aphrodite")));
     }
 
