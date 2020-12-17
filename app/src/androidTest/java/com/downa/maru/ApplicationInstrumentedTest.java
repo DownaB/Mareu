@@ -2,10 +2,14 @@ package com.downa.maru;
 
 import android.widget.DatePicker;
 
+import com.downa.maru.Controller.MainActivity;
+
+import org.junit.Rule;
 import org.junit.Test;
 
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -15,6 +19,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 public class ApplicationInstrumentedTest {
+
+    @Rule
+    public ActivityScenarioRule mActivityScenarioRule = new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
     public void applicationTest(){
