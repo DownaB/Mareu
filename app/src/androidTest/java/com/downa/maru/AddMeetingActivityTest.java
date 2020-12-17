@@ -4,12 +4,16 @@ import android.util.Patterns;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import com.downa.maru.Controller.AddMeetingActivity;
+
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
 
 import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -22,9 +26,12 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class AddMeetingActivityTest {
 
+    @Rule
+    public ActivityScenarioRule mActivityScenarioRule = new ActivityScenarioRule(AddMeetingActivity.class);
+
     @Test
     public void setDateInDatePicker(int year, int month, int dayOfMonth){
-        onView(withId(R.layout.activity_add_meeting));
+
         onView(withId(R.id.select_date)).perform(ViewActions.click());
         onView(isAssignableFrom(DatePicker.class)).check(matches(isDisplayed()));
         onView(isAssignableFrom(DatePicker.class)).perform(setDateInDatePicker(2020,11,8));
@@ -34,7 +41,7 @@ public class AddMeetingActivityTest {
 
     @Test
     public void setTimeInTimePicker(int hour, int minute){
-        onView(withId(R.layout.activity_add_meeting));
+
         onView(withId(R.id.select_hour)).perform(ViewActions.click());
         onView(isAssignableFrom(TimePicker.class)).check(matches(isDisplayed()));
         onView(isAssignableFrom(TimePicker.class)).perform(setTimeInTimePicker(13,00));
@@ -44,7 +51,7 @@ public class AddMeetingActivityTest {
 
     @Test
     public void addChipOnChipGroup(String mail){
-        onView(withId(R.layout.activity_add_meeting));
+
         onView(withId(R.id.Input)).perform(ViewActions.typeText(String.valueOf(Patterns.EMAIL_ADDRESS.matcher(mail).matches())));
         onView(withId(R.id.Btn_add)).perform(ViewActions.click());
         onView(withId(R.id.Participant)).check(matches(isDisplayed()));
@@ -56,7 +63,7 @@ public class AddMeetingActivityTest {
 
     @Test
     public void addMeeting(){
-        onView(withId(R.layout.activity_add_meeting));
+
         onView(withId(R.id.Create)).perform(ViewActions.click());
         onView(Matchers.allOf(isDisplayed(),ViewMatchers.withId(R.id.meeting_recyclerview))).check((ViewAssertion) hasChildCount(1));
     }
