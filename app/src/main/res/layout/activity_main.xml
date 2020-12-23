@@ -6,7 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controller.MainActivity">
+    tools:context=".Controller.MainActivity"
+    android:background="@drawable/background">
 
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar"/>
@@ -26,6 +27,8 @@
         android:clickable="true"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        app:backgroundTint="@color/colorPrimary"
+        app:tint= "@color/design_default_color_background"
         app:fabSize="normal"
         android:src="@drawable/ic_add_circle_black_24dp" />
 

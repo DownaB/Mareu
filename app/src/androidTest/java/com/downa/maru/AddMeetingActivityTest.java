@@ -53,12 +53,10 @@ public class AddMeetingActivityTest {
     @Test
     public void addChipOnChipGroup(){
 
-        onView(withId(R.id.Input)).perform(ViewActions.typeText(String.valueOf(Patterns.EMAIL_ADDRESS.matcher().matches())));
+        onView(withId(R.id.Input)).perform(ViewActions.typeText(String.valueOf("@")));
         onView(withId(R.id.Btn_add)).perform(ViewActions.click());
         onView(withId(R.id.Participant)).check(matches(hasMinimumChildCount(1)));
-        onView(withId(R.id.Input)).perform(ViewActions.typeText(String.valueOf("texte")));
-        onView(withId(R.id.Btn_add)).perform(ViewActions.click());
-        onView(withId(R.id.Participant)).check(matches(hasMinimumChildCount(1)));
+
     }
 
     @Test

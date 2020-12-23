@@ -75,7 +75,7 @@ public class MainActivityTest {
     public void checkIfClickMenu_SubMenuLaunched(){
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
         onData(CoreMatchers.anything()).inRoot(RootMatchers.isPlatformPopup())
-                .inAdapterView(CoreMatchers.instanceOf(MenuPopupWindow.MenuDropDownListView.class)).atPosition(1).perform(ViewActions.click());
+                .inAdapterView(CoreMatchers.instanceOf(MenuPopupWindow.MenuDropDownListView.class)).atPosition(0).perform(ViewActions.click());
         onView(withText("Aphrodite")).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
     }
 
