@@ -20,6 +20,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 
 public class AddMeetingActivityTest {
 
@@ -44,7 +45,7 @@ public class AddMeetingActivityTest {
         onView(isAssignableFrom(TimePicker.class)).check(matches(isDisplayed()));
         onView(isAssignableFrom(TimePicker.class)).perform(PickerActions.setTime(13,00));
         onView(withId(android.R.id.button1)).perform(ViewActions.click());
-        onView(withId(R.id.Hour)).check(matches(withText("13:00")));
+        onView(withId(R.id.Hour)).check(matches(allOf(withText("13:00"),isDisplayed())));
     }
 
 
