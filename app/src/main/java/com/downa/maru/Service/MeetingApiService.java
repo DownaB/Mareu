@@ -9,6 +9,7 @@ import com.downa.maru.Controller.RoomGenerator;
 import com.downa.maru.Model.Meeting;
 import com.downa.maru.Model.Room;
 import com.downa.maru.R;
+import com.downa.maru.databinding.ActivityRowMeetingBinding;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,6 +29,7 @@ public class MeetingApiService implements ApiService {
     public void createMeeting(Meeting meeting) {
         meetings.add(meeting);
     }
+
 
     @Override
     public void deleteMeeting(Meeting meeting) {
@@ -63,4 +65,5 @@ public class MeetingApiService implements ApiService {
         }
         return byHour;
     }
+
 }

@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.downa.maru.Model.Meeting;
 import com.downa.maru.R;
+import com.downa.maru.Service.ApiService;
+
 
 import java.util.List;
 
@@ -16,6 +18,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> {
+
+
+    private ApiService mApiService;
 
     List<Meeting> mMeetingList;
 
@@ -31,7 +36,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
 
             avatar = itemView.findViewById(R.id.avatar);
             meeting = itemView.findViewById(R.id.text_meeting);
-            delete = itemView.findViewById(R.id.imageButton);
+            delete = itemView.findViewById(R.id.delete);
         }
     }
 
@@ -45,12 +50,22 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_row_meeting, parent,false);
         MeetingViewHolder meetingViewHolder = new MeetingViewHolder(view);
         return meetingViewHolder;
+
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull MeetingViewHolder holder, int position) {
         Meeting meeting = mMeetingList.get(position);
         holder.meeting.setText(meeting.getSubject());
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mApiService.deleteMeeting(meeting);
+
+            }
+        });
 
 
     }
@@ -59,6 +74,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     public int getItemCount() {
         return mMeetingList.size();
     }
+
 
 
 }

@@ -25,4 +25,5 @@
     <string name="effacer_les_filtres">effacer les filtres</string>
     <string name="sujet">Sujet</string>
     <string name="creer">CREER</string>
+    <string name="mail_non_valide">l\'email saisie n\'est pas valide</string>
 </resources>

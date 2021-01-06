@@ -153,7 +153,7 @@ private ApiService mApiService = DI.getMeeting();
                     binding.Participant.addView(chip, 0);
 
                 } else {
-                    Toast.makeText(AddMeetingActivity.this,"l'email saisie n'est pas valide",Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddMeetingActivity.this, R.string.mail_non_valide,Toast.LENGTH_LONG).show();
                 }
             }
 
