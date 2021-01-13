@@ -35,10 +35,16 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MainActivity extends AppCompatActivity {
 
 
-    private RecyclerView.LayoutManager mLayoutManager;
+
     private MeetingAdapter mMeetingAdapter;
     private ActivityMainBinding binding;
     private ApiService mApiService = DI.getMeeting();
+
+    private CharSequence room = null;
+    private int year = -1;
+    private int month = -1;
+    private int dayOfMonth = -1;
+
 
 
     @Override
@@ -55,10 +61,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        List<Meeting> meetingList = mApiService.getMeeting();
-
-        mMeetingAdapter = new MeetingAdapter(meetingList);
-        binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
+        if (room != null) {
+            filterByRoom(room);
+        } else if (year != -1 && month != -1 && dayOfMonth != -1)
+        {
+            filterByDate(year,month,dayOfMonth);
+        }else {
+        clearFilter();
+    }
 
         binding.addMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,6 +115,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void filterByRoom(CharSequence title)
     {
+        year = -1;
+        month = -1;
+        dayOfMonth = -1;
         final List<Meeting> meetings = mApiService.filterByRoom(title.toString());
         mMeetingAdapter = new MeetingAdapter(meetings);
         binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
@@ -119,15 +130,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
             {
-                final List<Meeting> meetings = mApiService.filterByDate(year, month, dayOfMonth);
-                mMeetingAdapter = new MeetingAdapter(meetings);
-                binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
+                MainActivity.this.dayOfMonth = dayOfMonth;
+                MainActivity.this.month = month;
+                MainActivity.this.year= year;
+                filterByDate(year,month,dayOfMonth);
             }
         }, 2020, 11, 12).show();
     }
 
+    private void filterByDate(int year, int month, int dayOfMonth){
+
+        room = null;
+        final List<Meeting> meetings = mApiService.filterByDate(year, month, dayOfMonth);
+        mMeetingAdapter = new MeetingAdapter(meetings);
+        binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
+    }
+
     private void clearFilter()
     {
+        room = null;
+        year = -1;
+        month = -1;
+        dayOfMonth = -1;
+
         final List<Meeting> meetings = mApiService.getMeeting();
         mMeetingAdapter = new MeetingAdapter(meetings);
         binding.meetingRecyclerview.setAdapter(mMeetingAdapter);

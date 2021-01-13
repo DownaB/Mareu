@@ -88,7 +88,8 @@ private ApiService mApiService = DI.getMeeting();
                 month=selectedMonth;
                 year= selectedYear;
 
-                binding.Date.setText(selectedDay + "/" + selectedMonth++ + "/" + selectedYear);
+                selectedMonth ++;
+                binding.Date.setText(String.format("%02d/%02d/%04d",selectedDay + "/" + selectedMonth + "/" + selectedYear));
             }
         };
 
@@ -114,7 +115,7 @@ private ApiService mApiService = DI.getMeeting();
                 hour = selectedHour;
                 minute = selectedMinute;
 
-                binding.Hour.setText(selectedHour + ":" + selectedMinute);
+                binding.Hour.setText(String.format("%02d:%02d",selectedHour + ":" + selectedMinute));
 
             }
         },9,0, true);
@@ -126,8 +127,6 @@ private ApiService mApiService = DI.getMeeting();
             }
         });
     }
-
-
 
     private void initAddChip(){
 
@@ -193,19 +192,19 @@ private ApiService mApiService = DI.getMeeting();
         private void initValidation(){
 
             if (binding.Participant.getChildCount() <1){
-                Toast.makeText(AddMeetingActivity.this,"Merci d'entrer un participant", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddMeetingActivity.this,R.string.Merci_d_entrer_un_participant, Toast.LENGTH_SHORT).show();
             }
 
             else if (TextUtils.isEmpty(binding.Date.getText()) == true){
-                Toast.makeText(AddMeetingActivity.this, "Merci d'entrer une date", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_une_date, Toast.LENGTH_SHORT).show();
             }
 
             else if (TextUtils.isEmpty(binding.Hour.getText()) == true){
-                Toast.makeText(AddMeetingActivity.this, "Merci d'entrer une heure", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_une_heure, Toast.LENGTH_SHORT).show();
             }
 
             else if(TextUtils.isEmpty(binding.Subject.getText()) == true){
-            Toast.makeText(AddMeetingActivity.this,"Merci d'entrer le sujet de la réunion",Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddMeetingActivity.this,R.string.Merci_d_entrer_le_sujet_de_la_réunion,Toast.LENGTH_SHORT).show();
 
         }else{
                 ArrayList<String> emails = new ArrayList<>();

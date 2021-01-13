@@ -1,5 +1,6 @@
 package com.downa.maru.Controller;
 
+import android.util.EventLog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.downa.maru.Model.Meeting;
+import com.downa.maru.Model.Room;
 import com.downa.maru.R;
 import com.downa.maru.Service.ApiService;
 
 
 import java.util.List;
 
+import Events.DeleteMeetingEvent;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +47,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         mMeetingList = meetingList;
     }
 
+    public RoomAdapter(RoomGenerator RoomList){mRoom = RoomList;}
+
     @NonNull
     @Override
     public MeetingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -57,12 +62,14 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     @Override
     public void onBindViewHolder(@NonNull MeetingViewHolder holder, int position) {
         Meeting meeting = mMeetingList.get(position);
+        Room room = mRoom.get(position);
         holder.meeting.setText(meeting.getSubject());
+        holder.avatar.getContext().load(room.getAvatar());
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mApiService.deleteMeeting(meeting);
+                Event.getDefault().post(new DeleteMeetingEvent(meeting));
 
             }
         });
