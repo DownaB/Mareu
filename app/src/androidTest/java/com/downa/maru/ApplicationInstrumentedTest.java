@@ -35,9 +35,9 @@ public class ApplicationInstrumentedTest {
         onView(withId(R.id.add_meeting)).perform(ViewActions.click());
         onView(withId(R.id.RoomMeeting)).perform(ViewActions.click());
         onView(withText("Zeus")).perform(ViewActions.click());
-        onView(withId(R.id.select_date)).perform(ViewActions.click());
-        onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2020,12 ,8));
-        onView(withId(android.R.id.button1)).perform(ViewActions.click());
+//        onView(withId(R.id.select_date)).perform(ViewActions.click());
+//        onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2020,12 ,8));
+//        onView(withId(android.R.id.button1)).perform(ViewActions.click());
         onView(withId(R.id.select_hour)).perform(ViewActions.click());
         onView(isAssignableFrom(TimePicker.class)).perform(PickerActions.setTime(13,00));
         onView(withId(android.R.id.button1)).perform(ViewActions.click());

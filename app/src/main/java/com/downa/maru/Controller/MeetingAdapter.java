@@ -26,6 +26,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     private ApiService mApiService;
 
     List<Meeting> mMeetingList;
+    List<Room> mRoomList;
 
 
     public static class MeetingViewHolder extends RecyclerView.ViewHolder {
@@ -47,7 +48,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         mMeetingList = meetingList;
     }
 
-    public RoomAdapter(RoomGenerator RoomList){mRoom = RoomList;}
+    public RoomAdapter(List<Room> roomList){mRoomList = roomList;}
+
 
     @NonNull
     @Override
@@ -62,7 +64,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     @Override
     public void onBindViewHolder(@NonNull MeetingViewHolder holder, int position) {
         Meeting meeting = mMeetingList.get(position);
-        Room room = mRoom.get(position);
+        Room room = mRoomList.get(position);
         holder.meeting.setText(meeting.getSubject());
         holder.avatar.getContext().load(room.getAvatar());
 
