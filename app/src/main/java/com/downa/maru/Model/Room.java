@@ -1,7 +1,5 @@
 package com.downa.maru.Model;
 
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.DrawableContainer;
 import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
@@ -10,9 +8,9 @@ public class Room {
 
     private String name;
     @DrawableRes
-     private int avatar;
+     private ImageView avatar;
 
-    public Room(@DrawableRes int avatar, String name ) {
+    public Room(@DrawableRes ImageView avatar, String name ) {
         this.name = name;
         this.avatar = avatar;
     }
@@ -30,11 +28,11 @@ public class Room {
         this.name = name;
     }
 
-    public int getAvatar() {
+    public ImageView getAvatar() {
         return avatar;
     }
 
-    public void setAvatar  (int avatar) {
+    public void setAvatar  (ImageView avatar) {
         this.avatar = avatar;
     }
 }

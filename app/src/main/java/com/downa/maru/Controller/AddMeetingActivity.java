@@ -89,7 +89,7 @@ private ApiService mApiService = DI.getMeeting();
                 year= selectedYear;
 
                 selectedMonth ++;
-                binding.Date.setText(String.format("%02d/%02d/%04d",selectedDay + "/" + selectedMonth + "/" + selectedYear));
+                binding.Date.setText(String.format("%02d/%02d/%04d",selectedDay ,selectedMonth ,selectedYear));
             }
         };
 
@@ -115,7 +115,7 @@ private ApiService mApiService = DI.getMeeting();
                 hour = selectedHour;
                 minute = selectedMinute;
 
-                binding.Hour.setText(String.format("%02d:%02d",selectedHour + ":" + selectedMinute));
+                binding.Hour.setText(String.format("%02d:%02d",selectedHour,selectedMinute));
 
             }
         },9,0, true);
