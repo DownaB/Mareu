@@ -82,7 +82,7 @@ private ApiService mApiService = DI.getMeeting();
 
         final DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker view, int selectedDay, int selectedMonth, int selectedYear) {
+            public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
 
                 day=selectedDay;
                 month=selectedMonth;

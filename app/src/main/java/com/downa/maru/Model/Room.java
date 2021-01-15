@@ -8,9 +8,9 @@ public class Room {
 
     private String name;
     @DrawableRes
-     private ImageView avatar;
+     private int avatar;
 
-    public Room(@DrawableRes ImageView avatar, String name ) {
+    public Room(@DrawableRes int avatar, String name ) {
         this.name = name;
         this.avatar = avatar;
     }
@@ -28,11 +28,11 @@ public class Room {
         this.name = name;
     }
 
-    public ImageView getAvatar() {
+    public int getAvatar() {
         return avatar;
     }
 
-    public void setAvatar  (ImageView avatar) {
+    public void setAvatar  (int avatar) {
         this.avatar = avatar;
     }
 }

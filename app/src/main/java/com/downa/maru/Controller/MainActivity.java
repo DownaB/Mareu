@@ -19,9 +19,14 @@ import com.downa.maru.Service.ApiService;
 import com.downa.maru.Service.MeetingApiService;
 import com.downa.maru.databinding.ActivityMainBinding;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Calendar;
 import java.util.List;
 
 import DI.DI;
+import Events.DeleteMeetingEvent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private ApiService mApiService = DI.getMeeting();
 
+
     private CharSequence room = null;
     private int year = -1;
     private int month = -1;
@@ -57,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) binding.toolbar.getRoot());
 
     }
+
 
     @Override
     protected void onResume() {
@@ -78,6 +85,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onDeleteMeeting(DeleteMeetingEvent event) {
+        mApiService.deleteMeeting(event.mMeeting);
+       DI.getMeeting();
     }
 
     @Override
@@ -125,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void datePicker() {
 
-        new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener()
+        final DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener()
         {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
@@ -134,8 +159,14 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.month = month;
                 MainActivity.this.year= year;
                 filterByDate(year,month,dayOfMonth);
+
+
             }
-        }, 2020, 11, 12).show();
+        };
+        final Calendar c = Calendar.getInstance();
+        final DatePickerDialog mDatePickerDialog = new DatePickerDialog(this, listener, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
+
+        mDatePickerDialog.show();
     }
 
     private void filterByDate(int year, int month, int dayOfMonth){

@@ -12,6 +12,8 @@ import com.downa.maru.Model.Meeting;
 
 import com.downa.maru.R;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import Events.DeleteMeetingEvent;
@@ -61,7 +63,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     public void onBindViewHolder(@NonNull MeetingViewHolder holder, int position) {
         Meeting meeting = mMeetingList.get(position);
         holder.meeting.setText(meeting.getSubject());
-        holder.avatar = meeting.getRoom().getAvatar();
+        holder.avatar.setImageResource(meeting.getRoom().getAvatar());
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
