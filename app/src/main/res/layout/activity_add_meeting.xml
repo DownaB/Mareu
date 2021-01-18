@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@drawable/background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,46 +14,38 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/toolbar"/>
-
-        <Spinner
-            android:id="@+id/RoomMeeting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="20dp" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/Date"
-                android:layout_width="0dp"
+            <Button
+                android:id="@+id/Btn_add"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/date"
-                android:textSize="20sp"
-                android:textColor="@color/colorPrimary"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:padding="20dp"/>
+                android:layout_marginTop="20dp"
+                android:padding="20dp"
+                android:text="@string/ajouter" />
 
             <Button
-                android:id="@+id/select_date"
-                android:layout_width="0dp"
+                android:id="@+id/Create"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
                 android:padding="20dp"
-                android:text="@string/selectionnez_une_date" />
+                android:text="@string/creer"
+                android:textSize="25sp" />
 
-        </LinearLayout>
+
+            <EditText
+                android:id="@+id/Subject"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/sujet"
+                android:inputType="text"
+                android:padding="20dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,90 +53,97 @@
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/Hour"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="20dp"
-                    android:text="@string/heure"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
-
                 <Button
                     android:id="@+id/select_hour"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
+                    android:layout_weight="2"
                     android:padding="20dp"
                     android:text="@string/selectionnez_une_heure" />
+
+                <TextView
+                    android:id="@+id/Hour"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:padding="20dp"
+                    android:text="@string/heure"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
             </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/Input"
-                android:hint="@string/entrer_le_mail_des_particpants"
-                android:textColorHint="@color/colorPrimary"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:textColor="@color/colorPrimary"
-                android:padding="20dp"/>
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/select_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="2"
+                    android:padding="20dp"
+                    android:text="@string/selectionnez_une_date" />
+
+                <TextView
+                    android:id="@+id/Date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:padding="20dp"
+                    android:text="@string/date"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/RoomMeeting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="20dp" />
+
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/Participant"
+                style="@style/Widget.MaterialComponents.Chip.Entry"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:theme="@style/Theme.MaterialComponents"
-                style="@style/Widget.MaterialComponents.Chip.Entry"
                 android:layout_marginTop="20dp"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:theme="@style/Theme.MaterialComponents">
 
             </com.google.android.material.chip.ChipGroup>
 
 
-            <Button
-                android:id="@+id/Btn_add"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/ajouter"
                 android:layout_marginTop="20dp"
-                android:padding="20dp"/>
+                android:hint="@string/entrer_le_mail_des_particpants"
+                android:padding="20dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
 
-
-        <EditText
-            android:id="@+id/Subject"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/sujet"
-            android:textColorHint="@color/colorPrimary"
-            android:inputType="text"
-            android:textColor="@color/colorPrimary"
-            android:layout_marginTop="20dp"
-            android:padding="20dp"/>
-
-        <Button
-            android:id="@+id/Create"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/creer"
-            android:textSize="25sp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:padding="20dp"/>
-
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
 
 
         </LinearLayout>
     </ScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

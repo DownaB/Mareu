@@ -14,13 +14,13 @@ public class Meeting {
     public Meeting(Room room, List<String> participants, int day, int month, int year, int hour, int minute, String subject) {
 
         this.participants = participants;
-        this.date = initGetTimeInMillis(day, month, year,  hour,  minute);
+        this.date = initGetTimeInMillis(day, month, year, hour, minute);
         this.subject = subject;
         this.room = room;
     }
 
 
-    private long initGetTimeInMillis (int day, int month, int year, int hour, int minute){
+    private long initGetTimeInMillis(int day, int month, int year, int hour, int minute) {
         Calendar c = Calendar.getInstance();
         c.set(year, month, day, hour, minute);
         return c.getTimeInMillis();

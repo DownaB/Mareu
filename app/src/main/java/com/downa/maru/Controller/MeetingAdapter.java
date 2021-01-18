@@ -23,9 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> {
 
 
-
     List<Meeting> mMeetingList;
-
 
 
     public static class MeetingViewHolder extends RecyclerView.ViewHolder {
@@ -48,11 +46,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     }
 
 
-
     @NonNull
     @Override
     public MeetingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_row_meeting, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_row_meeting, parent, false);
         MeetingViewHolder meetingViewHolder = new MeetingViewHolder(view);
         return meetingViewHolder;
 
@@ -80,7 +77,6 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     public int getItemCount() {
         return mMeetingList.size();
     }
-
 
 
 }

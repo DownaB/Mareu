@@ -1,15 +1,7 @@
 package com.downa.maru.Service;
 
-import android.app.DatePickerDialog;
-import android.content.Context;
-import android.view.View;
-import android.widget.DatePicker;
 
-import com.downa.maru.Controller.RoomGenerator;
 import com.downa.maru.Model.Meeting;
-import com.downa.maru.Model.Room;
-import com.downa.maru.R;
-import com.downa.maru.databinding.ActivityRowMeetingBinding;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,7 +51,7 @@ public class MeetingApiService implements ApiService {
             final Calendar mCalendar = Calendar.getInstance();
             mCalendar.setTimeInMillis(theMeeting.getDate());
 
-            if (selectedDate.get(Calendar.YEAR)== mCalendar.get(Calendar.YEAR) && selectedDate.get(Calendar.MONTH) == mCalendar.get(Calendar.MONTH) && selectedDate.get(Calendar.DAY_OF_MONTH) == mCalendar.get(Calendar.DAY_OF_MONTH)){
+            if (selectedDate.get(Calendar.YEAR) == mCalendar.get(Calendar.YEAR) && selectedDate.get(Calendar.MONTH) == mCalendar.get(Calendar.MONTH) && selectedDate.get(Calendar.DAY_OF_MONTH) == mCalendar.get(Calendar.DAY_OF_MONTH)) {
                 byHour.add(theMeeting);
             }
         }

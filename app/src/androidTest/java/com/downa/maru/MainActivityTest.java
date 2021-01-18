@@ -27,26 +27,24 @@ import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentat
 public class MainActivityTest {
 
 
-
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityRule = new ActivityScenarioRule<>(MainActivity.class);
 
 
-
     @Test
-    public void checkIfClickAddMeeting_NewActivityLaunched(){
+    public void checkIfClickAddMeeting_NewActivityLaunched() {
         onView(withId(R.id.add_meeting)).perform(ViewActions.click());
         onView(withId(R.id.Create)).check(matches(isDisplayed()));
     }
 
     @Test
-    public  void checkIfMenuLaunched(){
+    public void checkIfMenuLaunched() {
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
         onView(withText("date")).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
     }
 
     @Test
-    public void checkIfClickMenu_DatePickerLaunched(){
+    public void checkIfClickMenu_DatePickerLaunched() {
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
         onData(CoreMatchers.anything()).inRoot(RootMatchers.isPlatformPopup())
                 .inAdapterView(CoreMatchers.instanceOf(MenuPopupWindow.MenuDropDownListView.class)).atPosition(0).perform(ViewActions.click());
@@ -55,7 +53,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void checkIfClickMenu_SubMenuLaunched(){
+    public void checkIfClickMenu_SubMenuLaunched() {
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
         onData(CoreMatchers.anything()).inRoot(RootMatchers.isPlatformPopup())
                 .inAdapterView(CoreMatchers.instanceOf(MenuPopupWindow.MenuDropDownListView.class)).atPosition(1).perform(ViewActions.click());

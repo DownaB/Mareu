@@ -1,9 +1,7 @@
 package com.downa.maru.Controller;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +14,6 @@ import com.downa.maru.Model.Meeting;
 import com.downa.maru.Model.Room;
 import com.downa.maru.R;
 import com.downa.maru.Service.ApiService;
-import com.downa.maru.Service.MeetingApiService;
 import com.downa.maru.databinding.ActivityMainBinding;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,14 +28,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 
 public class MainActivity extends AppCompatActivity {
-
 
 
     private MeetingAdapter mMeetingAdapter;
@@ -50,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private int year = -1;
     private int month = -1;
     private int dayOfMonth = -1;
-
 
 
     @Override
@@ -70,17 +61,16 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if (room != null) {
             filterByRoom(room);
-        } else if (year != -1 && month != -1 && dayOfMonth != -1)
-        {
-            filterByDate(year,month,dayOfMonth);
-        }else {
-        clearFilter();
-    }
+        } else if (year != -1 && month != -1 && dayOfMonth != -1) {
+            filterByDate(year, month, dayOfMonth);
+        } else {
+            clearFilter();
+        }
 
         binding.addMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,AddMeetingActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddMeetingActivity.class);
                 startActivity(intent);
             }
         });
@@ -102,18 +92,20 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe
     public void onDeleteMeeting(DeleteMeetingEvent event) {
         mApiService.deleteMeeting(event.mMeeting);
-       DI.getMeeting();
+        final List<Meeting> meetings = mApiService.getMeeting();
+        mMeetingAdapter = new MeetingAdapter(meetings);
+        binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu,menu);
+        inflater.inflate(R.menu.main_menu, menu);
 
-        final SubMenu mSubMenu = menu.findItem (R.id.room_list).getSubMenu();
+        final SubMenu mSubMenu = menu.findItem(R.id.room_list).getSubMenu();
 
-        for (Room room : RoomGenerator.generateRoom()){
-            mSubMenu.add(Menu.NONE, Menu.NONE,Menu.NONE,room.getName());
+        for (Room room : RoomGenerator.generateRoom()) {
+            mSubMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, room.getName());
         }
         return true;
     }
@@ -121,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.date:
                 datePicker();
                 return true;
@@ -138,8 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void filterByRoom(CharSequence title)
-    {
+    private void filterByRoom(CharSequence title) {
         year = -1;
         month = -1;
         dayOfMonth = -1;
@@ -150,15 +141,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void datePicker() {
 
-        final DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener()
-        {
+        final DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
-            {
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 MainActivity.this.dayOfMonth = dayOfMonth;
                 MainActivity.this.month = month;
-                MainActivity.this.year= year;
-                filterByDate(year,month,dayOfMonth);
+                MainActivity.this.year = year;
+                filterByDate(year, month, dayOfMonth);
 
 
             }
@@ -169,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         mDatePickerDialog.show();
     }
 
-    private void filterByDate(int year, int month, int dayOfMonth){
+    private void filterByDate(int year, int month, int dayOfMonth) {
 
         room = null;
         final List<Meeting> meetings = mApiService.filterByDate(year, month, dayOfMonth);
@@ -177,8 +166,7 @@ public class MainActivity extends AppCompatActivity {
         binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
     }
 
-    private void clearFilter()
-    {
+    private void clearFilter() {
         room = null;
         year = -1;
         month = -1;
@@ -189,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
     }
 
-    }
+}
 
 
 

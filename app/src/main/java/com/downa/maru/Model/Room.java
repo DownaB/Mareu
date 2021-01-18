@@ -1,23 +1,21 @@
 package com.downa.maru.Model;
 
-import android.widget.ImageView;
-
 import androidx.annotation.DrawableRes;
 
 public class Room {
 
     private String name;
     @DrawableRes
-     private int avatar;
+    private int avatar;
 
-    public Room(@DrawableRes int avatar, String name ) {
+    public Room(@DrawableRes int avatar, String name) {
         this.name = name;
         this.avatar = avatar;
     }
 
     @Override
     public String toString() {
-        return name ;
+        return name;
     }
 
     public String getName() {
@@ -32,7 +30,7 @@ public class Room {
         return avatar;
     }
 
-    public void setAvatar  (int avatar) {
+    public void setAvatar(int avatar) {
         this.avatar = avatar;
     }
 }

@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,9 +18,7 @@ import com.downa.maru.Service.ApiService;
 import com.downa.maru.Model.Meeting;
 import com.downa.maru.Model.Room;
 import com.downa.maru.R;
-import com.downa.maru.Service.MeetingApiService;
 import com.downa.maru.databinding.ActivityAddMeetingBinding;
-import com.downa.maru.databinding.ToolbarBinding;
 import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
@@ -31,29 +27,27 @@ import java.util.List;
 
 import DI.DI;
 
-import androidx.annotation.NonNull;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
 
 
 public class AddMeetingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-private int day = -1;
-private int month = -1;
-private int year = -1;
-private int hour = -1;
-private int minute = -1;
+    private int day = -1;
+    private int month = -1;
+    private int year = -1;
+    private int hour = -1;
+    private int minute = -1;
 
 
-private ActivityAddMeetingBinding binding;
+    private ActivityAddMeetingBinding binding;
 
-private List <Room> RoomList = RoomGenerator.generateRoom();
+    private List<Room> RoomList = RoomGenerator.generateRoom();
 
-private ApiService mApiService = DI.getMeeting();
+    private ApiService mApiService = DI.getMeeting();
 
 
     @Override
@@ -77,19 +71,18 @@ private ApiService mApiService = DI.getMeeting();
     }
 
 
-
     private void initDatePicker() {
 
         final DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
 
-                day=selectedDay;
-                month=selectedMonth;
-                year= selectedYear;
+                day = selectedDay;
+                month = selectedMonth;
+                year = selectedYear;
 
-                selectedMonth ++;
-                binding.Date.setText(String.format("%02d/%02d/%04d",selectedDay ,selectedMonth ,selectedYear));
+                selectedMonth++;
+                binding.Date.setText(String.format("%02d/%02d/%04d", selectedDay, selectedMonth, selectedYear));
             }
         };
 
@@ -106,7 +99,7 @@ private ApiService mApiService = DI.getMeeting();
     }
 
 
-    private void initTimePicker(){
+    private void initTimePicker() {
 
         final TimePickerDialog mTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -115,10 +108,10 @@ private ApiService mApiService = DI.getMeeting();
                 hour = selectedHour;
                 minute = selectedMinute;
 
-                binding.Hour.setText(String.format("%02d:%02d",selectedHour,selectedMinute));
+                binding.Hour.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
 
             }
-        },9,0, true);
+        }, 9, 0, true);
 
         binding.selectHour.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +121,7 @@ private ApiService mApiService = DI.getMeeting();
         });
     }
 
-    private void initAddChip(){
+    private void initAddChip() {
 
         binding.BtnAdd.setOnClickListener(new View.OnClickListener() {
 
@@ -152,14 +145,14 @@ private ApiService mApiService = DI.getMeeting();
                     binding.Participant.addView(chip, 0);
 
                 } else {
-                    Toast.makeText(AddMeetingActivity.this, R.string.mail_non_valide,Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddMeetingActivity.this, R.string.mail_non_valide, Toast.LENGTH_LONG).show();
                 }
             }
 
         });
 
 
-        }
+    }
 
 
     private void initSpinnerRoom() {
@@ -170,77 +163,73 @@ private ApiService mApiService = DI.getMeeting();
         binding.RoomMeeting.setOnItemSelectedListener(this);
     }
 
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
 
         String text = parent.getItemAtPosition(position).toString();
-            Toast.makeText(parent.getContext(),text,Toast.LENGTH_SHORT).show();
+        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
 
-        }
+    }
 
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
 
-        }
+    }
 
-        public void initSubject(){
+    public void initSubject() {
 
         final String Subject = binding.Subject.getText().toString();
         System.out.println(Subject);
-        }
+    }
 
-        private void initValidation(){
+    private void initValidation() {
 
-            if (binding.Participant.getChildCount() <1){
-                Toast.makeText(AddMeetingActivity.this,R.string.Merci_d_entrer_un_participant, Toast.LENGTH_SHORT).show();
-            }
+        if (binding.Participant.getChildCount() < 1) {
+            Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_un_participant, Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(binding.Date.getText()) == true) {
+            Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_une_date, Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(binding.Hour.getText()) == true) {
+            Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_une_heure, Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(binding.Subject.getText()) == true) {
+            Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_le_sujet_de_la_réunion, Toast.LENGTH_SHORT).show();
 
-            else if (TextUtils.isEmpty(binding.Date.getText()) == true){
-                Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_une_date, Toast.LENGTH_SHORT).show();
-            }
-
-            else if (TextUtils.isEmpty(binding.Hour.getText()) == true){
-                Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_une_heure, Toast.LENGTH_SHORT).show();
-            }
-
-            else if(TextUtils.isEmpty(binding.Subject.getText()) == true){
-            Toast.makeText(AddMeetingActivity.this,R.string.Merci_d_entrer_le_sujet_de_la_réunion,Toast.LENGTH_SHORT).show();
-
-        }else{
-                ArrayList<String> emails = new ArrayList<>();
-                for (int i =0; i<binding.Participant.getChildCount();i++){
+        } else {
+            ArrayList<String> emails = new ArrayList<>();
+            for (int i = 0; i < binding.Participant.getChildCount(); i++) {
                 final Chip chip = (Chip) binding.Participant.getChildAt(i);
                 final String email = chip.getText().toString();
-                emails.add(email);}
-
-                final Room room = (Room) binding.RoomMeeting.getSelectedItem();
-
-                Meeting meeting = new Meeting(room,emails,day,month,year,hour,minute, binding.Subject.getText().toString());
-
-                mApiService.createMeeting(meeting);
-
-                navigate();
-
-                finish();
+                emails.add(email);
             }
 
+            final Room room = (Room) binding.RoomMeeting.getSelectedItem();
 
+            Meeting meeting = new Meeting(room, emails, day, month, year, hour, minute, binding.Subject.getText().toString());
+
+            mApiService.createMeeting(meeting);
+
+            navigate();
+
+            finish();
         }
 
-    private void initAddMeeting(){
-    binding.Create.setOnClickListener(new View.OnClickListener() {
+
+    }
+
+    private void initAddMeeting() {
+        binding.Create.setOnClickListener(new View.OnClickListener() {
 
 
-        @Override
-        public void onClick(View view) {
-           initValidation();
-        }
-    });
+            @Override
+            public void onClick(View view) {
+                initValidation();
+            }
+        });
 
-}
-    public void navigate (){
-    Intent intent = new Intent(AddMeetingActivity.this, MainActivity.class);
-    startActivity(intent);
+    }
+
+    public void navigate() {
+        Intent intent = new Intent(AddMeetingActivity.this, MainActivity.class);
+        startActivity(intent);
 
     }
 
@@ -252,7 +241,7 @@ private ApiService mApiService = DI.getMeeting();
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
         }

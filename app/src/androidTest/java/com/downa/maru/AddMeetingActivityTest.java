@@ -2,7 +2,7 @@ package com.downa.maru;
 
 import android.widget.DatePicker;
 import android.widget.TimePicker;
-import android.widget.Toast;
+
 
 import com.downa.maru.Controller.AddMeetingActivity;
 
@@ -28,35 +28,35 @@ public class AddMeetingActivityTest {
     public ActivityScenarioRule<AddMeetingActivity> mActivityScenarioRule = new ActivityScenarioRule<>(AddMeetingActivity.class);
 
     @Test
-    public void setDateInDatePicker(){
+    public void setDateInDatePicker() {
 
         onView(withId(R.id.select_date)).perform(ViewActions.click());
         onView(isAssignableFrom(DatePicker.class)).check(matches(isDisplayed()));
-        onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2020,12 ,8));
+        onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2020, 12, 8));
         onView(withId(android.R.id.button1)).perform(ViewActions.click());
         onView(withId(R.id.Date)).check(matches(withText("08/12/2020")));
 
     }
 
     @Test
-    public void setTimeInTimePicker(){
+    public void setTimeInTimePicker() {
 
         onView(withId(R.id.select_hour)).perform(ViewActions.click());
         onView(isAssignableFrom(TimePicker.class)).check(matches(isDisplayed()));
-        onView(isAssignableFrom(TimePicker.class)).perform(PickerActions.setTime(13,00));
+        onView(isAssignableFrom(TimePicker.class)).perform(PickerActions.setTime(13, 00));
         onView(withId(android.R.id.button1)).perform(ViewActions.click());
-        onView(withId(R.id.Hour)).check(matches(allOf(withText("13:00"),isDisplayed())));
+        onView(withId(R.id.Hour)).check(matches(allOf(withText("13:00"), isDisplayed())));
     }
 
 
     @Test
-    public void addChipOnChipGroup(){
+    public void addChipOnChipGroup() {
 
         onView(withId(R.id.Input)).perform(ViewActions.typeText(("android@gmail")));
-        onView(withId(R.id.Btn_add)).perform(ViewActions.scrollTo(),ViewActions.click());
+        onView(withId(R.id.Btn_add)).perform(ViewActions.scrollTo(), ViewActions.click());
         onView(withId(R.id.Participant)).check(matches(hasMinimumChildCount(0)));
         onView(withId(R.id.Input)).perform(ViewActions.typeText((".com")));
-        onView(withId(R.id.Btn_add)).perform(ViewActions.scrollTo(),ViewActions.click());
+        onView(withId(R.id.Btn_add)).perform(ViewActions.scrollTo(), ViewActions.click());
         onView(withId(R.id.Participant)).check(matches(hasMinimumChildCount(1)));
 
     }
