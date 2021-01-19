@@ -14,68 +14,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/Btn_add"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:padding="20dp"
-                android:text="@string/ajouter" />
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
 
-            <Button
-                android:id="@+id/Create"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:padding="20dp"
-                android:text="@string/creer"
-                android:textSize="25sp" />
-
-
-            <EditText
-                android:id="@+id/Subject"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <Spinner
+                android:id="@+id/RoomMeeting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="@string/sujet"
-                android:inputType="text"
-                android:padding="20dp"
-                android:textColor="@color/colorPrimary"
-                android:textColorHint="@color/colorPrimary" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/select_hour"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_weight="2"
-                    android:padding="20dp"
-                    android:text="@string/selectionnez_une_heure" />
-
-                <TextView
-                    android:id="@+id/Hour"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:padding="20dp"
-                    android:text="@string/heure"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
-            </LinearLayout>
+                android:padding="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -99,21 +47,52 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:padding="20dp"
                     android:text="@string/date"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
-
             </LinearLayout>
 
-            <Spinner
-                android:id="@+id/RoomMeeting"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:padding="20dp" />
+                android:orientation="horizontal">
 
+                <Button
+                    android:id="@+id/select_hour"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:padding="20dp"
+                    android:text="@string/selectionnez_une_heure" />
+
+                <TextView
+                    android:id="@+id/Hour"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:padding="20dp"
+                    android:text="@string/heure"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/entrer_le_mail_des_particpants"
+                android:padding="20dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/Participant"
@@ -126,20 +105,40 @@
 
             </com.google.android.material.chip.ChipGroup>
 
+            <Button
+                android:id="@+id/Btn_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:padding="20dp"
+                android:text="@string/ajouter" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/Input"
+            <EditText
+                android:id="@+id/Subject"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="@string/entrer_le_mail_des_particpants"
+                android:hint="@string/sujet"
+                android:inputType="text"
                 android:padding="20dp"
                 android:textColor="@color/colorPrimary"
-                android:textColorHint="@color/colorPrimary" />
+                android:textColorHint="@color/colorPrimary"
+                android:textSize="20sp"/>
 
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/toolbar" />
+            <Button
+                android:id="@+id/Create"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="@string/creer"
+                android:textSize="25sp" />
+
+
 
 
         </LinearLayout>

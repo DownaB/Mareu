@@ -59,13 +59,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (room != null) {
-            filterByRoom(room);
-        } else if (year != -1 && month != -1 && dayOfMonth != -1) {
-            filterByDate(year, month, dayOfMonth);
-        } else {
-            clearFilter();
-        }
+        initList();
 
         binding.addMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         final List<Meeting> meetings = mApiService.getMeeting();
         mMeetingAdapter = new MeetingAdapter(meetings);
         binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
+        initList();
     }
 
     @Override
@@ -175,6 +170,17 @@ public class MainActivity extends AppCompatActivity {
         final List<Meeting> meetings = mApiService.getMeeting();
         mMeetingAdapter = new MeetingAdapter(meetings);
         binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
+    }
+
+    private void initList(){
+
+        if (room != null) {
+            filterByRoom(room);
+        } else if (year != -1 && month != -1 && dayOfMonth != -1) {
+            filterByDate(year, month, dayOfMonth);
+        } else {
+            clearFilter();
+        }
     }
 
 }

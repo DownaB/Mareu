@@ -1,13 +1,10 @@
 package com.downa.maru;
 
-import android.os.TestLooperManager;
-import android.view.LayoutInflater;
 
 import com.downa.maru.Controller.RoomGenerator;
 import com.downa.maru.Model.Meeting;
-import com.downa.maru.Model.Room;
 import com.downa.maru.Service.ApiService;
-import com.google.android.material.chip.Chip;
+
 
 import org.junit.Before;
 import org.junit.Test;

@@ -73,8 +73,8 @@ public class ApplicationInstrumentedTest {
         onData(CoreMatchers.anything()).inRoot(RootMatchers.isPlatformPopup())
                 .inAdapterView(CoreMatchers.instanceOf(MenuPopupWindow.MenuDropDownListView.class)).atPosition(2).perform(ViewActions.click());
         onView(withId(R.id.meeting_recyclerview)).check(matches(hasMinimumChildCount(1)));
-
-
+        onView(withId(R.id.delete)).perform(ViewActions.click());
+        onView(withId(R.id.meeting_recyclerview)).check(matches(hasMinimumChildCount(0)));
 
     }
 }
