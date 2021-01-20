@@ -1,7 +1,11 @@
 package com.downa.maru.Model;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class Meeting {
 
@@ -57,5 +61,11 @@ public class Meeting {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public String getHour(){
+        final Date formatDate = new Date(this.date);
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm", Locale.FRENCH);
+        return simpleDateFormat.format(formatDate);
     }
 }

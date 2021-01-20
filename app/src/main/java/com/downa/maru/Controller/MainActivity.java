@@ -86,9 +86,6 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe
     public void onDeleteMeeting(DeleteMeetingEvent event) {
         mApiService.deleteMeeting(event.mMeeting);
-        final List<Meeting> meetings = mApiService.getMeeting();
-        mMeetingAdapter = new MeetingAdapter(meetings);
-        binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
         initList();
     }
 
@@ -129,9 +126,7 @@ public class MainActivity extends AppCompatActivity {
         year = -1;
         month = -1;
         dayOfMonth = -1;
-        final List<Meeting> meetings = mApiService.filterByRoom(title.toString());
-        mMeetingAdapter = new MeetingAdapter(meetings);
-        binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
+        updateList(mApiService.filterByRoom(title.toString()));
     }
 
     private void datePicker() {
@@ -148,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         final Calendar c = Calendar.getInstance();
-        final DatePickerDialog mDatePickerDialog = new DatePickerDialog(this, listener, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.YEAR));
+        final DatePickerDialog mDatePickerDialog = new DatePickerDialog(this, listener, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
         mDatePickerDialog.show();
     }
@@ -156,9 +151,7 @@ public class MainActivity extends AppCompatActivity {
     private void filterByDate(int year, int month, int dayOfMonth) {
 
         room = null;
-        final List<Meeting> meetings = mApiService.filterByDate(year, month, dayOfMonth);
-        mMeetingAdapter = new MeetingAdapter(meetings);
-        binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
+        updateList(mApiService.filterByDate(year,month,dayOfMonth));
     }
 
     private void clearFilter() {
@@ -167,9 +160,7 @@ public class MainActivity extends AppCompatActivity {
         month = -1;
         dayOfMonth = -1;
 
-        final List<Meeting> meetings = mApiService.getMeeting();
-        mMeetingAdapter = new MeetingAdapter(meetings);
-        binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
+        updateList(mApiService.getMeeting());
     }
 
     private void initList(){
@@ -181,6 +172,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             clearFilter();
         }
+    }
+
+    private void updateList(List<Meeting> meetings){
+        mMeetingAdapter = new MeetingAdapter(meetings);
+        binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.downa.maru.Controller;
 
 
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,13 +32,17 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         ImageView avatar;
         TextView meeting;
         ImageButton delete;
+        TextView participants;
 
         public MeetingViewHolder(@NonNull View itemView) {
             super(itemView);
 
             avatar = itemView.findViewById(R.id.avatar);
             meeting = itemView.findViewById(R.id.text_meeting);
+            Typeface boldTypeFace = Typeface.defaultFromStyle(Typeface.BOLD);
+            meeting.setTypeface(boldTypeFace);
             delete = itemView.findViewById(R.id.delete);
+            participants = itemView.findViewById(R.id.participant);
         }
     }
 
@@ -59,7 +64,25 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     @Override
     public void onBindViewHolder(@NonNull MeetingViewHolder holder, int position) {
         Meeting meeting = mMeetingList.get(position);
-        holder.meeting.setText(meeting.getSubject());
+        StringBuilder builder = new StringBuilder();
+        builder.append(meeting.getSubject());
+        builder.append(" - ");
+        builder.append(meeting.getHour());
+        builder.append(" - ");
+        builder.append(meeting.getRoom().getName());
+
+        StringBuilder builderParticipants = new StringBuilder();
+
+        for (int i = 0; i<meeting.getParticipants().size(); i++) {
+            builderParticipants.append(meeting.getParticipants().get(i));
+
+            if (i < meeting.getParticipants().size() - 1) {
+                builderParticipants.append(" , ");
+            }
+        }
+
+        holder.meeting.setText(builder.toString());
+        holder.participants.setText(builderParticipants.toString());
         holder.avatar.setImageResource(meeting.getRoom().getAvatar());
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
