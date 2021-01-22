@@ -64,7 +64,6 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
         initTimePicker();
         initAddChip();
         initSpinnerRoom();
-        initSubject();
         initAddMeeting();
         setupActionBar();
 
@@ -166,9 +165,6 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
 
-        String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -176,11 +172,6 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
 
     }
 
-    public void initSubject() {
-
-        final String Subject = binding.Subject.getText().toString();
-        System.out.println(Subject);
-    }
 
     private void initValidation() {
 
