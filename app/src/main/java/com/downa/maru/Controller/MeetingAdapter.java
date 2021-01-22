@@ -89,7 +89,6 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
             @Override
             public void onClick(View view) {
                 EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
-
             }
         });
 

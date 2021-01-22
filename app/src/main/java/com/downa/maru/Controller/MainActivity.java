@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -126,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         year = -1;
         month = -1;
         dayOfMonth = -1;
+        room = title;
         updateList(mApiService.filterByRoom(title.toString()));
     }
 
