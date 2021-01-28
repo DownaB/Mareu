@@ -28,9 +28,10 @@
     <string name="mail_non_valide">l\'email saisie n\'est pas valide</string>
     <string name ="Merci_d_entrer_un_participant">Merci d/entrer un participant</string>
     <string name="Merci_d_entrer_une_date">Merci d/entrer une date</string>
-    <string name="Merci_d_entrer_une_heure">Merci d/entrer une heure </string>
+    <string name="Merci_d_entrer_une_heure_de_début">Merci d/entrer une heure de début </string>
     <string name="Merci_d_entrer_le_sujet_de_la_réunion">Merci d/entrer le sujet de la réunion</string>
     <string name="selectionnez_une_heure_de_fin">selectionnez une heure de fin</string>
     <string name="salle_indispo">La salle de reunion n\'est pas disponible sur ce creneau</string>
+    <string name="heure_fin">Merci d\'entrer une heure de fin</string>
 
 </resources>

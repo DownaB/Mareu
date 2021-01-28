@@ -16,11 +16,11 @@ public class Meeting {
     private Room room;
 
 
-    public Meeting(Room room, List<String> participants, int day, int month, int year, int hour, int minute, String subject) {
+    public Meeting(Room room, List<String> participants, int day, int month, int year, int hour, int minute, int dateOut, int monthOut, int yearOut, int hourOut, int minuteOut, String subject) {
 
         this.participants = participants;
         this.date = initGetTimeInMillis(day, month, year, hour, minute);
-        this.dateOut = initGetTimeInMillis(day,month,year,hour,minute);
+        this.dateOut = initGetTimeInMillis(dateOut,monthOut,yearOut,hourOut,minuteOut);
         this.subject = subject;
         this.room = room;
     }
@@ -72,12 +72,6 @@ public class Meeting {
     public String getHour(){
         final Date formatDate = new Date(this.date);
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm", Locale.FRENCH);
-        return simpleDateFormat.format(formatDate);
-    }
-
-    public String getHourOut(){
-        final Date formatDate = new Date(this.dateOut);
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm",Locale.FRENCH);
         return simpleDateFormat.format(formatDate);
     }
 }

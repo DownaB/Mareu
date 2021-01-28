@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.icu.util.DateInterval;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.google.android.material.chip.Chip;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,6 +46,11 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
     private int year = -1;
     private int hour = -1;
     private int minute = -1;
+    private  int dayOut = -1;
+    private int monthOut = -1;
+    private int yearOut = -1;
+    private int hourOut = -1;
+    private int minuteOut = -1;
 
     private ActivityAddMeetingBinding binding;
 
@@ -189,7 +196,9 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
         } else if (TextUtils.isEmpty(binding.Date.getText()) == true) {
             Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_une_date, Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(binding.Hour.getText()) == true) {
-            Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_une_heure, Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_une_heure_de_début, Toast.LENGTH_SHORT).show();
+        }else if (TextUtils.isEmpty(binding.HourOut.getText())== true){
+            Toast.makeText(AddMeetingActivity.this, R.string.heure_fin, Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(binding.Subject.getText()) == true) {
             Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_le_sujet_de_la_réunion, Toast.LENGTH_SHORT).show();
 
@@ -203,37 +212,49 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
 
             final Room room = (Room) binding.RoomMeeting.getSelectedItem();
 
-            Meeting meeting = new Meeting(room, emails, day, month, year, hour, minute, binding.Subject.getText().toString());
+            Meeting meeting = new Meeting(room, emails, day, month, year, hour, minute,dayOut,monthOut,yearOut,hourOut,minuteOut,binding.Subject.getText().toString());
 
-            mApiService.createMeeting(meeting);
-
-            navigate();
-
-            finish();
+            initVerification(meeting);
         }
     }
 
-    private void initVerification(){
-        Meeting mMeeting = null;
-        List<Meeting> mMeetings = mApiService.getMeeting();
+    private void initVerification(Meeting meeting) {
+        List<Meeting> mMeetings = mApiService.filterByRoom(meeting.getRoom().getName());
+        Calendar date = Calendar.getInstance();
+        date.setTimeInMillis(meeting.getDate());
+        Calendar dateOut = Calendar.getInstance();
+        dateOut.setTimeInMillis(meeting.getDateOut());
+        boolean asConflict = false;
 
-                for (int i = 0; i <mMeetings.size();i++){
+        for (int i = 0; i < mMeetings.size(); i++) {
+            Calendar date1 = Calendar.getInstance();
+            date1.setTimeInMillis(mMeetings.get(i).getDate());
+            Calendar dateOut1 = Calendar.getInstance();
+            dateOut1.setTimeInMillis(mMeetings.get(i).getDateOut());
 
-                    if (mMeetings.get(i).getRoom().getName().equals(mMeeting.getRoom().getName())
-                            && (Objects.equals(mMeetings.get(i).getDate(),mMeeting.getDate())
-                            &&(mMeetings.get(i).getHour().after(mMeeting.getHour())
-                            &&(mMeetings.get(i).getHourOut().before(mMeeting.getHourOut()));{
-                            Toast.makeText(AddMeetingActivity.this, R.string.salle_indispo,Toast.LENGTH_SHORT).show();
-                    }else{
-
-                            mApiService.createMeeting(mMeeting);
-
-                            navigate();
-
-                            finish();
-                        }
-                    }
+            if (date.get(Calendar.YEAR) == date1.get(Calendar.YEAR) && date.get(Calendar.MONTH) == date1.get(Calendar.MONTH) && date.get(Calendar.DAY_OF_MONTH) == date1.get(Calendar.DAY_OF_MONTH)) {
+                if (date.get(Calendar.HOUR_OF_DAY) >= date1.get(Calendar.HOUR_OF_DAY) && date.get(Calendar.HOUR_OF_DAY) <= dateOut1.get(Calendar.HOUR_OF_DAY)) {
+                    asConflict = true;
+                } else if
+                (dateOut.get(Calendar.HOUR_OF_DAY) >= date1.get(Calendar.HOUR_OF_DAY) && dateOut.get(Calendar.HOUR_OF_DAY) <= dateOut1.get(Calendar.HOUR_OF_DAY))
+                {
+                    asConflict = true;
                 }
+                if (asConflict == true
+                ) {
+                    break;
+                }
+            }
+        }
+
+        if (asConflict == true){
+            Toast.makeText(AddMeetingActivity.this, R.string.salle_indispo, Toast.LENGTH_SHORT).show();
+        }else{
+            mApiService.createMeeting(meeting);
+            navigate();
+            finish();
+        }
+    }
 
 
     private void initAddMeeting() {
