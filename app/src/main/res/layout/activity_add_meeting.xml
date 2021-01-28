@@ -69,10 +69,40 @@
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
                     android:padding="20dp"
-                    android:text="@string/selectionnez_une_heure" />
+                    android:text="@string/selectionnez_une_heure_de_début" />
 
                 <TextView
                     android:id="@+id/Hour"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:padding="20dp"
+                    android:text="@string/heure"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/select_hour_out"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:padding="20dp"
+                    android:text="@string/selectionnez_une_heure_de_fin" />
+
+                <TextView
+                    android:id="@+id/Hour_out"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

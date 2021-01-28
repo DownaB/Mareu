@@ -3,6 +3,7 @@ package com.downa.maru.Controller;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.icu.util.DateInterval;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -21,9 +22,11 @@ import com.downa.maru.R;
 import com.downa.maru.databinding.ActivityAddMeetingBinding;
 import com.google.android.material.chip.Chip;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import DI.DI;
 
@@ -42,13 +45,11 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
     private int hour = -1;
     private int minute = -1;
 
-
     private ActivityAddMeetingBinding binding;
 
     private List<Room> RoomList = RoomGenerator.generateRoom();
 
     private ApiService mApiService = DI.getMeeting();
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,16 +63,14 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
 
         initDatePicker();
         initTimePicker();
+        initTimePickerOut();
         initAddChip();
         initSpinnerRoom();
         initAddMeeting();
         setupActionBar();
-
     }
 
-
     private void initDatePicker() {
-
         final DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
@@ -94,12 +93,9 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
                 mDatePickerDialog.show();
             }
         });
-
     }
 
-
     private void initTimePicker() {
-
         final TimePickerDialog mTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
@@ -120,8 +116,28 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
         });
     }
 
-    private void initAddChip() {
+    private void initTimePickerOut() {
+        final TimePickerDialog mTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
 
+                hour = selectedHour;
+                minute = selectedMinute;
+
+                binding.HourOut.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
+
+            }
+        }, 10, 0, true);
+
+        binding.selectHourOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTimePickerDialog.show();
+            }
+        });
+    }
+
+    private void initAddChip() {
         binding.BtnAdd.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -147,12 +163,8 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
                     Toast.makeText(AddMeetingActivity.this, R.string.mail_non_valide, Toast.LENGTH_LONG).show();
                 }
             }
-
         });
-
-
     }
-
 
     private void initSpinnerRoom() {
 
@@ -164,14 +176,11 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
-
 
     private void initValidation() {
 
@@ -202,33 +211,50 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
 
             finish();
         }
-
-
     }
+
+    private void initVerification(){
+        Meeting mMeeting = null;
+        List<Meeting> mMeetings = mApiService.getMeeting();
+
+                for (int i = 0; i <mMeetings.size();i++){
+
+                    if (mMeetings.get(i).getRoom().getName().equals(mMeeting.getRoom().getName())
+                            && (Objects.equals(mMeetings.get(i).getDate(),mMeeting.getDate())
+                            &&(mMeetings.get(i).getHour().after(mMeeting.getHour())
+                            &&(mMeetings.get(i).getHourOut().before(mMeeting.getHourOut()));{
+                            Toast.makeText(AddMeetingActivity.this, R.string.salle_indispo,Toast.LENGTH_SHORT).show();
+                    }else{
+
+                            mApiService.createMeeting(mMeeting);
+
+                            navigate();
+
+                            finish();
+                        }
+                    }
+                }
+
 
     private void initAddMeeting() {
         binding.Create.setOnClickListener(new View.OnClickListener() {
-
 
             @Override
             public void onClick(View view) {
                 initValidation();
             }
         });
-
     }
 
     public void navigate() {
         Intent intent = new Intent(AddMeetingActivity.this, MainActivity.class);
         startActivity(intent);
-
     }
 
     private void setupActionBar() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -238,8 +264,6 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
 
 

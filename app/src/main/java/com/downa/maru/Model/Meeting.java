@@ -11,6 +11,7 @@ public class Meeting {
 
     private List<String> participants;
     private long date;
+    private long dateOut;
     private String subject;
     private Room room;
 
@@ -19,6 +20,7 @@ public class Meeting {
 
         this.participants = participants;
         this.date = initGetTimeInMillis(day, month, year, hour, minute);
+        this.dateOut = initGetTimeInMillis(day,month,year,hour,minute);
         this.subject = subject;
         this.room = room;
     }
@@ -47,6 +49,10 @@ public class Meeting {
         this.date = date;
     }
 
+    public long getDateOut() { return dateOut; }
+
+    public void setDateOut(long dateOut){this.dateOut = dateOut;}
+
     public String getSubject() {
         return subject;
     }
@@ -66,6 +72,12 @@ public class Meeting {
     public String getHour(){
         final Date formatDate = new Date(this.date);
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm", Locale.FRENCH);
+        return simpleDateFormat.format(formatDate);
+    }
+
+    public String getHourOut(){
+        final Date formatDate = new Date(this.dateOut);
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm",Locale.FRENCH);
         return simpleDateFormat.format(formatDate);
     }
 }

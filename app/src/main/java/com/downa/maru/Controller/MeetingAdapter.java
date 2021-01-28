@@ -69,6 +69,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         builder.append(" - ");
         builder.append(meeting.getHour());
         builder.append(" - ");
+        builder.append(meeting.getHourOut());
+        builder.append(" - ");
         builder.append(meeting.getRoom().getName());
 
         StringBuilder builderParticipants = new StringBuilder();
