@@ -12,7 +12,6 @@ import java.util.List;
 public abstract class RoomGenerator {
 
     public static List<Room> RoomList = Arrays.asList(
-
             new Room(R.drawable.avatar_blue, "Aphrodite"),
             new Room(R.drawable.avatar_brown, "Apollon"),
             new Room(R.drawable.avatar_darkpurple, "Poseidon"),
@@ -23,12 +22,9 @@ public abstract class RoomGenerator {
             new Room(R.drawable.avatar_purple, "Zeus"),
             new Room(R.drawable.avatar_grey, "Hadès"),
             new Room(R.drawable.avatar_darkblue, "Titan")
-
     );
-
 
     public static List<Room> generateRoom() {
         return new ArrayList<>(RoomList);
     }
-
 }

@@ -15,9 +15,7 @@ public class Meeting {
     private String subject;
     private Room room;
 
-
     public Meeting(Room room, List<String> participants, int day, int month, int year, int hour, int minute, int hourOut, int minuteOut, String subject) {
-
         this.participants = participants;
         this.date = initGetTimeInMillis(day, month, year, hour, minute);
         this.dateOut = initGetTimeInMillis(day,month,year,hourOut,minuteOut);
@@ -25,13 +23,11 @@ public class Meeting {
         this.room = room;
     }
 
-
     private long initGetTimeInMillis(int day, int month, int year, int hour, int minute) {
         Calendar c = Calendar.getInstance();
         c.set(year, month, day, hour, minute);
         return c.getTimeInMillis();
     }
-
 
     public List<String> getParticipants() {
         return participants;

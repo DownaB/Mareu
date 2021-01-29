@@ -27,10 +27,8 @@ import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentat
 
 public class MainActivityTest {
 
-
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityRule = new ActivityScenarioRule<>(MainActivity.class);
-
 
     @Test
     public void checkIfClickAddMeeting_NewActivityLaunched() {
@@ -50,7 +48,6 @@ public class MainActivityTest {
         onData(CoreMatchers.anything()).inRoot(RootMatchers.isPlatformPopup())
                 .inAdapterView(CoreMatchers.instanceOf(MenuPopupWindow.MenuDropDownListView.class)).atPosition(0).perform(ViewActions.click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).check(matches(isDisplayed()));
-
     }
 
     @Test
@@ -60,5 +57,4 @@ public class MainActivityTest {
                 .inAdapterView(CoreMatchers.instanceOf(MenuPopupWindow.MenuDropDownListView.class)).atPosition(1).perform(ViewActions.click());
         onView(withText("Aphrodite")).inRoot(RootMatchers.isPlatformPopup()).check(matches(isDisplayed()));
     }
-
 }

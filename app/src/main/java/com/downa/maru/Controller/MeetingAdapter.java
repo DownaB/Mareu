@@ -23,12 +23,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> {
 
-
     List<Meeting> mMeetingList;
 
-
     public static class MeetingViewHolder extends RecyclerView.ViewHolder {
-
         ImageView avatar;
         TextView meeting;
         ImageButton delete;
@@ -50,15 +47,12 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         mMeetingList = meetingList;
     }
 
-
     @NonNull
     @Override
     public MeetingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_row_meeting, parent, false);
         MeetingViewHolder meetingViewHolder = new MeetingViewHolder(view);
         return meetingViewHolder;
-
-
     }
 
     @Override
@@ -84,21 +78,16 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         holder.meeting.setText(builder.toString());
         holder.participants.setText(builderParticipants.toString());
         holder.avatar.setImageResource(meeting.getRoom().getAvatar());
-
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
             }
         });
-
-
     }
 
     @Override
     public int getItemCount() {
         return mMeetingList.size();
     }
-
-
 }

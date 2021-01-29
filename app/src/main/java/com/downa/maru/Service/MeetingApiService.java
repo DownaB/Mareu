@@ -11,7 +11,6 @@ public class MeetingApiService implements ApiService {
 
     List<Meeting> meetings = new ArrayList<>();
 
-
     @Override
     public List<Meeting> getMeeting() {
         return meetings;
@@ -21,7 +20,6 @@ public class MeetingApiService implements ApiService {
     public void createMeeting(Meeting meeting) {
         meetings.add(meeting);
     }
-
 
     @Override
     public void deleteMeeting(Meeting meeting) {
@@ -82,8 +80,7 @@ public class MeetingApiService implements ApiService {
                 if (date.get(Calendar.HOUR_OF_DAY) >= date1.get(Calendar.HOUR_OF_DAY) && date.get(Calendar.HOUR_OF_DAY) <= dateOut1.get(Calendar.HOUR_OF_DAY)) {
                     hasConflict = true;
                 } else if
-                (dateOut.get(Calendar.HOUR_OF_DAY) >= date1.get(Calendar.HOUR_OF_DAY) && dateOut.get(Calendar.HOUR_OF_DAY) <= dateOut1.get(Calendar.HOUR_OF_DAY))
-                {
+                (dateOut.get(Calendar.HOUR_OF_DAY) >= date1.get(Calendar.HOUR_OF_DAY) && dateOut.get(Calendar.HOUR_OF_DAY) <= dateOut1.get(Calendar.HOUR_OF_DAY)) {
                     hasConflict = true;
                 }
                 if (hasConflict == true) {
@@ -91,9 +88,7 @@ public class MeetingApiService implements ApiService {
                 }
             }
         }
-
         return hasConflict == false;
-
     }
-    }
+}
 

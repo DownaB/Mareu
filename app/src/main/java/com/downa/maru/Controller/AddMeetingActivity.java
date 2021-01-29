@@ -172,7 +172,6 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
     }
 
     private void initSpinnerRoom() {
-
         ArrayAdapter<Room> arrayAdapter = new ArrayAdapter<Room>(this, android.R.layout.simple_spinner_item, RoomList);
         binding.RoomMeeting.setAdapter(arrayAdapter);
 
@@ -198,7 +197,6 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
             Toast.makeText(AddMeetingActivity.this, R.string.heure_fin, Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(binding.Subject.getText()) == true) {
             Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_le_sujet_de_la_réunion, Toast.LENGTH_SHORT).show();
-
         } else {
             ArrayList<String> emails = new ArrayList<>();
             for (int i = 0; i < binding.Participant.getChildCount(); i++) {
@@ -206,11 +204,8 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
                 final String email = chip.getText().toString();
                 emails.add(email);
             }
-
             final Room room = (Room) binding.RoomMeeting.getSelectedItem();
-
             Meeting meeting = new Meeting(room, emails, day, month, year, hour, minute,hourOut,minuteOut,binding.Subject.getText().toString());
-
             initVerification(meeting);
         }
     }

@@ -32,17 +32,14 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private MeetingAdapter mMeetingAdapter;
     private ActivityMainBinding binding;
     private ApiService mApiService = DI.getMeeting();
-
 
     private CharSequence room = null;
     private int year = -1;
     private int month = -1;
     private int dayOfMonth = -1;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,9 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
 
         setSupportActionBar((Toolbar) binding.toolbar.getRoot());
-
     }
-
 
     @Override
     protected void onResume() {
@@ -94,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.main_menu, menu);
 
         final SubMenu mSubMenu = menu.findItem(R.id.room_list).getSubMenu();
-
         for (Room room : RoomGenerator.generateRoom()) {
             mSubMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, room.getName());
         }
@@ -103,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.date:
                 datePicker();
@@ -113,12 +106,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.no_filter:
                 clearFilter();
                 return true;
-
             default:
                 filterByRoom(item.getTitle());
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     private void filterByRoom(CharSequence title) {
@@ -130,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void datePicker() {
-
         final DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -138,18 +128,14 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.month = month;
                 MainActivity.this.year = year;
                 filterByDate(year, month, dayOfMonth);
-
-
             }
         };
         final Calendar c = Calendar.getInstance();
         final DatePickerDialog mDatePickerDialog = new DatePickerDialog(this, listener, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-
         mDatePickerDialog.show();
     }
 
     private void filterByDate(int year, int month, int dayOfMonth) {
-
         room = null;
         updateList(mApiService.filterByDate(year,month,dayOfMonth));
     }
@@ -159,12 +145,10 @@ public class MainActivity extends AppCompatActivity {
         year = -1;
         month = -1;
         dayOfMonth = -1;
-
         updateList(mApiService.getMeeting());
     }
 
     private void initList(){
-
         if (room != null) {
             filterByRoom(room);
         } else if (year != -1 && month != -1 && dayOfMonth != -1) {
@@ -178,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
         mMeetingAdapter = new MeetingAdapter(meetings);
         binding.meetingRecyclerview.setAdapter(mMeetingAdapter);
     }
-
 }
 
 

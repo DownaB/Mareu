@@ -32,7 +32,6 @@ public class ApplicationInstrumentedTest {
 
     @Test
     public void applicationTest(){
-
         onView(withId(R.id.add_meeting)).perform(ViewActions.click());
         onView(withId(R.id.RoomMeeting)).perform(ViewActions.click());
         onView(withText("Zeus")).perform(ViewActions.click());
@@ -75,6 +74,5 @@ public class ApplicationInstrumentedTest {
         onView(withId(R.id.meeting_recyclerview)).check(matches(hasMinimumChildCount(1)));
         onView(withId(R.id.delete)).perform(ViewActions.click());
         onView(withId(R.id.meeting_recyclerview)).check(matches(hasMinimumChildCount(0)));
-
     }
 }
