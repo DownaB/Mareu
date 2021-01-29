@@ -16,4 +16,6 @@ public interface ApiService {
 
     List<Meeting> filterByDate(int year, int month, int dayOfMonth);
 
+    boolean isRoomAvailable(Meeting meeting);
+
 }

@@ -58,4 +58,42 @@ public class MeetingApiService implements ApiService {
         return byHour;
     }
 
-}
+    @Override
+    public boolean isRoomAvailable(Meeting meeting) {
+        List<Meeting> mMeetings = filterByRoom(meeting.getRoom().getName());
+
+        Calendar date = Calendar.getInstance();
+        date.setTimeInMillis(meeting.getDate());
+
+        Calendar dateOut = Calendar.getInstance();
+        dateOut.setTimeInMillis(meeting.getDateOut());
+
+        boolean hasConflict = false;
+
+        for (int i = 0; i < mMeetings.size(); i++) {
+
+            Calendar date1 = Calendar.getInstance();
+            date1.setTimeInMillis(mMeetings.get(i).getDate());
+
+            Calendar dateOut1 = Calendar.getInstance();
+            dateOut1.setTimeInMillis(mMeetings.get(i).getDateOut());
+
+            if (date.get(Calendar.YEAR) == date1.get(Calendar.YEAR) && date.get(Calendar.MONTH) == date1.get(Calendar.MONTH) && date.get(Calendar.DAY_OF_MONTH) == date1.get(Calendar.DAY_OF_MONTH)) {
+                if (date.get(Calendar.HOUR_OF_DAY) >= date1.get(Calendar.HOUR_OF_DAY) && date.get(Calendar.HOUR_OF_DAY) <= dateOut1.get(Calendar.HOUR_OF_DAY)) {
+                    hasConflict = true;
+                } else if
+                (dateOut.get(Calendar.HOUR_OF_DAY) >= date1.get(Calendar.HOUR_OF_DAY) && dateOut.get(Calendar.HOUR_OF_DAY) <= dateOut1.get(Calendar.HOUR_OF_DAY))
+                {
+                    hasConflict = true;
+                }
+                if (hasConflict == true) {
+                    break;
+                }
+            }
+        }
+
+        return hasConflict == false;
+
+    }
+    }
+

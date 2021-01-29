@@ -16,11 +16,11 @@ public class Meeting {
     private Room room;
 
 
-    public Meeting(Room room, List<String> participants, int day, int month, int year, int hour, int minute, int dateOut, int monthOut, int yearOut, int hourOut, int minuteOut, String subject) {
+    public Meeting(Room room, List<String> participants, int day, int month, int year, int hour, int minute, int hourOut, int minuteOut, String subject) {
 
         this.participants = participants;
         this.date = initGetTimeInMillis(day, month, year, hour, minute);
-        this.dateOut = initGetTimeInMillis(dateOut,monthOut,yearOut,hourOut,minuteOut);
+        this.dateOut = initGetTimeInMillis(day,month,year,hourOut,minuteOut);
         this.subject = subject;
         this.room = room;
     }

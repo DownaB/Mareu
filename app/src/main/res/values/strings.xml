@@ -33,5 +33,6 @@
     <string name="selectionnez_une_heure_de_fin">selectionnez une heure de fin</string>
     <string name="salle_indispo">La salle de reunion n\'est pas disponible sur ce creneau</string>
     <string name="heure_fin">Merci d\'entrer une heure de fin</string>
+    <string name="incohérence">Il existe une incohérence de saisie des heures de réunion</string>
 
 </resources>

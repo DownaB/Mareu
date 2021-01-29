@@ -23,6 +23,7 @@ import com.downa.maru.R;
 import com.downa.maru.databinding.ActivityAddMeetingBinding;
 import com.google.android.material.chip.Chip;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,9 +47,6 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
     private int year = -1;
     private int hour = -1;
     private int minute = -1;
-    private  int dayOut = -1;
-    private int monthOut = -1;
-    private int yearOut = -1;
     private int hourOut = -1;
     private int minuteOut = -1;
 
@@ -128,8 +126,8 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
             @Override
             public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
 
-                hour = selectedHour;
-                minute = selectedMinute;
+                hourOut = selectedHour;
+                minuteOut = selectedMinute;
 
                 binding.HourOut.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
 
@@ -190,14 +188,13 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
     }
 
     private void initValidation() {
-
         if (binding.Participant.getChildCount() < 1) {
             Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_un_participant, Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(binding.Date.getText()) == true) {
             Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_une_date, Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(binding.Hour.getText()) == true) {
             Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_une_heure_de_début, Toast.LENGTH_SHORT).show();
-        }else if (TextUtils.isEmpty(binding.HourOut.getText())== true){
+        }else if (TextUtils.isEmpty(binding.HourOut.getText())== true) {
             Toast.makeText(AddMeetingActivity.this, R.string.heure_fin, Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(binding.Subject.getText()) == true) {
             Toast.makeText(AddMeetingActivity.this, R.string.Merci_d_entrer_le_sujet_de_la_réunion, Toast.LENGTH_SHORT).show();
@@ -212,50 +209,21 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
 
             final Room room = (Room) binding.RoomMeeting.getSelectedItem();
 
-            Meeting meeting = new Meeting(room, emails, day, month, year, hour, minute,dayOut,monthOut,yearOut,hourOut,minuteOut,binding.Subject.getText().toString());
+            Meeting meeting = new Meeting(room, emails, day, month, year, hour, minute,hourOut,minuteOut,binding.Subject.getText().toString());
 
             initVerification(meeting);
         }
     }
 
     private void initVerification(Meeting meeting) {
-        List<Meeting> mMeetings = mApiService.filterByRoom(meeting.getRoom().getName());
-        Calendar date = Calendar.getInstance();
-        date.setTimeInMillis(meeting.getDate());
-        Calendar dateOut = Calendar.getInstance();
-        dateOut.setTimeInMillis(meeting.getDateOut());
-        boolean asConflict = false;
-
-        for (int i = 0; i < mMeetings.size(); i++) {
-            Calendar date1 = Calendar.getInstance();
-            date1.setTimeInMillis(mMeetings.get(i).getDate());
-            Calendar dateOut1 = Calendar.getInstance();
-            dateOut1.setTimeInMillis(mMeetings.get(i).getDateOut());
-
-            if (date.get(Calendar.YEAR) == date1.get(Calendar.YEAR) && date.get(Calendar.MONTH) == date1.get(Calendar.MONTH) && date.get(Calendar.DAY_OF_MONTH) == date1.get(Calendar.DAY_OF_MONTH)) {
-                if (date.get(Calendar.HOUR_OF_DAY) >= date1.get(Calendar.HOUR_OF_DAY) && date.get(Calendar.HOUR_OF_DAY) <= dateOut1.get(Calendar.HOUR_OF_DAY)) {
-                    asConflict = true;
-                } else if
-                (dateOut.get(Calendar.HOUR_OF_DAY) >= date1.get(Calendar.HOUR_OF_DAY) && dateOut.get(Calendar.HOUR_OF_DAY) <= dateOut1.get(Calendar.HOUR_OF_DAY))
-                {
-                    asConflict = true;
-                }
-                if (asConflict == true
-                ) {
-                    break;
-                }
-            }
-        }
-
-        if (asConflict == true){
+        if (mApiService.isRoomAvailable(meeting) == false) {
             Toast.makeText(AddMeetingActivity.this, R.string.salle_indispo, Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             mApiService.createMeeting(meeting);
             navigate();
             finish();
         }
     }
-
 
     private void initAddMeeting() {
         binding.Create.setOnClickListener(new View.OnClickListener() {
