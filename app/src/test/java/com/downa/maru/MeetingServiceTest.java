@@ -33,8 +33,9 @@ public class MeetingServiceTest {
         List<String> participant = Arrays.asList(
                 "justine@gmail.com", "roger@gmail.com");
 
-        Meeting meeting = new Meeting(RoomGenerator.generateRoom().get(0), participant, 12, 11, 2020, 22, 30, "test");
+        Meeting meeting = new Meeting(RoomGenerator.generateRoom().get(0), participant, 12, 11, 2020, 22, 30,23, 30, "test");
         return meeting;
+
     }
 
     @Test
@@ -83,4 +84,24 @@ public class MeetingServiceTest {
         assertEquals(0, meetings.size());
     }
 
+    @Test
+    public void roomIsAvailableWithSuccess() {
+
+        mService.createMeeting(generateMeeting());
+
+        List<String> participant = Arrays.asList(
+                "justine@gmail.com", "roger@gmail.com");
+
+        Meeting meeting1 = new Meeting(RoomGenerator.generateRoom().get(0),participant,12,11,2020,22,30,23,30,"test");
+
+        Meeting meeting2 = new Meeting(RoomGenerator.generateRoom().get(0), participant, 12,11,2020, 14,00,15,00,"test");
+
+        assertFalse(mService.isRoomAvailable(meeting1));
+
+        assertTrue(mService.isRoomAvailable(meeting2));
+
+
+
+
+    }
 }
